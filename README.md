@@ -10,6 +10,13 @@
 **Example**
 
 ```csharp
+using System;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using Xunit;
+using Xunit.Abstractions;
+using MXLogger;
+
 public class LoggerTest
 {
     private readonly Action<string> WriteLine;
