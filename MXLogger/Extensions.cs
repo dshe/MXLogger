@@ -33,7 +33,7 @@ namespace MXLogger
                 LogLevel.Error => "Error",
                 LogLevel.Critical => "Crit",
                 LogLevel.None => "None",
-                _ => throw new Exception("Invalid LogLevel."),
+                _ => throw new Exception("Invalid LogLevel.")
             };
         }
     }
