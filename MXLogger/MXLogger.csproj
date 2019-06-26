@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>8.0</LangVersion>
+    <NullableContextOptions>enable</NullableContextOptions>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/dshe/MXLogger</PackageProjectUrl>
+    <PackageIconUrl>https://github.com/dshe.png</PackageIconUrl>
+    <PackageTags>microsoft-extensions-logging xunit logger</PackageTags>
+    <Version>1.0.3</Version>
+    <Authors>DavidS</Authors>
+    <Company>DavidS</Company>
+    <Description>A minimal but extensible Microsoft.Extensions.Logging provider.</Description>
+    <AssemblyVersion>1.0.3.0</AssemblyVersion>
+    <FileVersion>1.0.32.0</FileVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
+  </ItemGroup>
+
+</Project>

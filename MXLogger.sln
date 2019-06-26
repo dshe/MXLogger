@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29021.104
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MXLogger", "MXLogger\MXLogger.csproj", "{528EBFF7-3A82-4CE3-B9CE-1184FAEE2B94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MXLoggerTest", "MXLoggerTest\MXLoggerTest.csproj", "{748B1ABD-0696-4461-AEEF-68F8A4374F9D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F66ED9D5-AF1D-4D26-85B7-6055350B274C}"
+	ProjectSection(SolutionItems) = preProject
+		appveyor.yml = appveyor.yml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{528EBFF7-3A82-4CE3-B9CE-1184FAEE2B94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{528EBFF7-3A82-4CE3-B9CE-1184FAEE2B94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{528EBFF7-3A82-4CE3-B9CE-1184FAEE2B94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{528EBFF7-3A82-4CE3-B9CE-1184FAEE2B94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{748B1ABD-0696-4461-AEEF-68F8A4374F9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{748B1ABD-0696-4461-AEEF-68F8A4374F9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{748B1ABD-0696-4461-AEEF-68F8A4374F9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{748B1ABD-0696-4461-AEEF-68F8A4374F9D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {89B65182-8BA6-4B39-AB94-5720BC52DA92}
+	EndGlobalSection
+EndGlobal
