@@ -2,6 +2,8 @@
 using System;
 using System.Runtime.CompilerServices;
 
+#nullable enable
+
 namespace MXLogger
 {
     public static class Extensions
@@ -19,22 +21,23 @@ namespace MXLogger
             factory.AddProvider(provider);
             return factory;
         }
+
         public static ILogger CreateLogger(this ILoggerFactory factory, [CallerMemberName] string callerName = "") =>
             factory.CreateLogger(callerName);
 
         public static string ToShortString(this LogLevel level)
         {
-            return level switch
+            switch (level) // (switch expression will not compile on Appveyor
             {
-                LogLevel.Trace => "Trace",
-                LogLevel.Debug => "Debug",
-                LogLevel.Information => "Info",
-                LogLevel.Warning => "Warn",
-                LogLevel.Error => "Error",
-                LogLevel.Critical => "Crit",
-                LogLevel.None => "None",
-                _ => throw new Exception("Invalid LogLevel.")
-            };
+                case LogLevel.Trace:       return "Trace";
+                case LogLevel.Debug:       return "Debug";
+                case LogLevel.Information: return "Info";
+                case LogLevel.Warning:     return "Warn";
+                case LogLevel.Error:       return "Error";
+                case LogLevel.Critical:    return "Crit";
+                case LogLevel.None:        return "None";
+            }
+            throw new Exception("Invalid LogLevel.");
         }
     }
 }
