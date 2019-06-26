@@ -33,7 +33,7 @@ namespace MXLoggerTest
         [Fact]
         public void InjectionWithExtensionTest()
         {
-            var services = new ServiceCollection().AddLogging(builder => builder.AddXLogger(WriteLine));
+            var services = new ServiceCollection().AddLogging(builder => builder.AddMXLogger(WriteLine));
             var serviceProvider = services.BuildServiceProvider();
             var logger = serviceProvider.GetService<ILogger<LoggerTest>>();
             logger.LogInformation("test");
@@ -53,7 +53,7 @@ namespace MXLoggerTest
         [Fact]
         public void LoggingFactoryWithExtensionTest()
         {
-            var factory = new LoggerFactory().AddXLogger(WriteLine);
+            var factory = new LoggerFactory().AddMXLogger(WriteLine);
             var logger = factory.CreateLogger<LoggerTest>();
             logger.LogInformation("anything");
             factory.Dispose();

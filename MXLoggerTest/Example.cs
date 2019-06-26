@@ -15,7 +15,7 @@ namespace MXLoggerTest
         [Fact]
         public void FactoryTest()
         {
-            ILoggerFactory factory = new LoggerFactory().AddXLogger(WriteLine);
+            ILoggerFactory factory = new LoggerFactory().AddMXLogger(WriteLine);
             ILogger logger = factory.CreateLogger<LoggerTest>();
 
             logger.LogCritical("message");
@@ -25,7 +25,7 @@ namespace MXLoggerTest
         public void InjectionTest()
         {
             IServiceCollection services = new ServiceCollection();
-            services.AddLogging(builder => builder.AddXLogger(WriteLine));
+            services.AddLogging(builder => builder.AddMXLogger(WriteLine));
             IServiceProvider serviceProvider = services.BuildServiceProvider();
             ILogger logger = serviceProvider.GetService<ILogger<LoggerTest>>();
             logger.LogInformation("message");

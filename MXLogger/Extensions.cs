@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
 using System.Runtime.CompilerServices;
+using Microsoft.Extensions.Logging.Abstractions;
 
 #nullable enable
 
@@ -8,14 +9,14 @@ namespace MXLogger
 {
     public static class Extensions
     {
-        public static ILoggingBuilder AddXLogger(this ILoggingBuilder builder, Action<string> writeLine, LogLevel logLevel = LogLevel.Trace)
+        public static ILoggingBuilder AddMXLogger(this ILoggingBuilder builder, Action<string> writeLine, LogLevel logLevel = LogLevel.Trace)
         {
             var provider = new MXLoggerProvider(writeLine, logLevel);
             builder.AddProvider(provider);
             return builder;
         }
 
-        public static ILoggerFactory AddXLogger(this ILoggerFactory factory, Action<string> writeLine, LogLevel logLevel = LogLevel.Trace)
+        public static ILoggerFactory AddMXLogger(this ILoggerFactory factory, Action<string> writeLine, LogLevel logLevel = LogLevel.Trace)
         {
             var provider = new MXLoggerProvider(writeLine, logLevel);
             factory.AddProvider(provider);
@@ -27,7 +28,7 @@ namespace MXLogger
 
         public static string ToShortString(this LogLevel level)
         {
-            switch (level) // (switch expression will not compile on Appveyor
+            switch (level) // (switch expression will not compile on Appveyor)
             {
                 case LogLevel.Trace:       return "Trace";
                 case LogLevel.Debug:       return "Debug";
