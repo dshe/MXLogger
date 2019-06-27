@@ -4,15 +4,13 @@ configuration: Release
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
-  version: '{version}'
-  package_version: '{version}'
+  version: '{version}-alpha'
+  package_version: '{version}-alpha'
   assembly_version: '{version}'
   file_version: '{version}'
-  informational_version: '{version}'
-before_build:
-- ps: dotnet restore
+  informational_version: '{version}-alpha'
 after_build:
-- ps: dotnet pack -c release -p:PackageVersion=3.3.3-beta
+- ps: dotnet pack -c release
 build:
   verbosity: minimal
   publish_nuget: true
