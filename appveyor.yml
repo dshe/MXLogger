@@ -1,4 +1,4 @@
-version: 1.0.{build}
+version: 1.0.0.beta-{build}
 image: Visual Studio 2019 Preview
 configuration: Release
 dotnet_csproj:
@@ -12,7 +12,7 @@ dotnet_csproj:
 before_build:
 - ps: dotnet restore
 after_build:
-- ps: dotnet pack -c release --version-suffix beta
+- ps: dotnet pack -c release -p:PackageVersion=3.3.3-beta
 build:
   verbosity: minimal
   publish_nuget: true
