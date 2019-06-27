@@ -9,6 +9,8 @@ dotnet_csproj:
   assembly_version: '{version}'
   file_version: '{version}'
   informational_version: '{version}-alpha'
+before_build:
+- ps: dotnet restore
 after_build:
 - ps: dotnet pack -c release
 build:
