@@ -15,6 +15,7 @@ after_build:
 - ps: dotnet pack -c release
 build:
   verbosity: minimal
+  publish_nuget: true
 test_script:
 - ps: dotnet test .\MXLoggerTest\MXLoggerTest.csproj
 artifacts:
