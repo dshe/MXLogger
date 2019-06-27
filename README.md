@@ -2,15 +2,21 @@
 
 ***Minimalist Microsoft.Extensions.Logging Provider***
 - compatible with xUnit and other test frameworks
-- supports Microsoft.Extensions.DependencyInjection
 - NetStandard 2.0 library
 - fully customizable formatting
 - provides output caching
-- dependencies: Microsoft.Extensions.Logging, Microsoft.Extensions.DependencyInjection.Abstractions
+- dependencies: Microsoft.Extensions.Logging
 
 **Example**
 
 ```csharp
+using System;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using Xunit;
+using Xunit.Abstractions;
+using MXLogger;
+
 public class LoggerTest
 {
     private readonly Action<string> WriteLine;
@@ -19,17 +25,17 @@ public class LoggerTest
     [Fact]
     public void FactoryTest()
     {
-        ILoggerFactory factory = new LoggerFactory().AddXLogger(WriteLine);
+        ILoggerFactory factory = new LoggerFactory().AddMXLogger(WriteLine);
         ILogger logger = factory.CreateLogger<LoggerTest>();
 
         logger.LogCritical("message");
     }
 
     [Fact]
-    public void InjectionTest()
+    public void DependencyInjectionTest()
     {
         IServiceCollection services = new ServiceCollection();
-        services.AddLogging(builder => builder.AddXLogger(WriteLine));
+        services.AddLogging(builder => builder.AddMXLogger(WriteLine));
         IServiceProvider serviceProvider = services.BuildServiceProvider();
         ILogger logger = serviceProvider.GetService<ILogger<LoggerTest>>();
 
