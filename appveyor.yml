@@ -5,14 +5,14 @@ dotnet_csproj:
   patch: true
   file: '**\*.csproj'
   version: '{version}'
-  package_version: '{version}-alpha'
+  package_version: '{version}'
   assembly_version: '{version}'
   file_version: '{version}'
   informational_version: '{version}'
 before_build:
 - ps: dotnet restore
 after_build:
-- ps: dotnet pack -c release
+- ps: dotnet pack -c release -version-suffix beta
 build:
   verbosity: minimal
   publish_nuget: true
