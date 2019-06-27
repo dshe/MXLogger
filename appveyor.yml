@@ -18,5 +18,9 @@ build:
   publish_nuget: true
 test_script:
 - ps: dotnet test .\MXLoggerTest\MXLoggerTest.csproj
+nuget:
+  account_feed: true
+  project_feed: true
+  disable_publish_on_pr: true
 artifacts:
 - path: '**\*.nupkg'
