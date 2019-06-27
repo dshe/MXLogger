@@ -1,7 +1,7 @@
 environment:
-  base_version: '1.0'
+  base_version: '1.0.{build}'
   version_suffix: '-alpha'
-version: $(base_version).{build}
+version: $(base_version)
 image: Visual Studio 2019 Preview
 configuration: Release
 dotnet_csproj:
