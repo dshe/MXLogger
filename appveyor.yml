@@ -12,7 +12,7 @@ dotnet_csproj:
 before_build:
 - ps: dotnet restore
 after_build:
-- ps: dotnet pack -c release -version-suffix beta
+- ps: dotnet pack -c release --version-suffix beta
 build:
   verbosity: minimal
   publish_nuget: true
