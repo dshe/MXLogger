@@ -8,10 +8,10 @@
     <PackageProjectUrl>https://github.com/dshe/MXLogger</PackageProjectUrl>
     <PackageIconUrl>https://github.com/dshe.png</PackageIconUrl>
     <PackageTags>microsoft-extensions-logging xunit logger</PackageTags>
-    <Version>1.0.0</Version>
+    <Description>A minimal but extensible Microsoft.Extensions.Logging provider.</Description>
     <Authors>DavidS</Authors>
     <Company>DavidS</Company>
-    <Description>A minimal but extensible Microsoft.Extensions.Logging provider.</Description>
+    <Version>1.0.0</Version>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
   </PropertyGroup>
