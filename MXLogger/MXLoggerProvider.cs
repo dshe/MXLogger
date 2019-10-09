@@ -45,8 +45,15 @@ namespace MXLogger
         {
             LogEntries.Add(logEntry);
             var str = Format(logEntry);
-            if (str != null)
+            if (str == null)
+                return;
+            try
+            {
                 WriteLine(str);
+            }
+            catch (Exception)
+            {
+            }
         }
 
         public virtual string? Format(LogInfo logInfo)
