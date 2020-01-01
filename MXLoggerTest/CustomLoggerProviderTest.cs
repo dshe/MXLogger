@@ -6,7 +6,7 @@ using Xunit;
 using Xunit.Abstractions;
 using MXLogger;
 
-#nullable enable
+
 
 namespace MXLoggerTest
 {

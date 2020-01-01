@@ -5,8 +5,6 @@ using System.Text;
 using System.Collections.Concurrent;
 using Microsoft.Extensions.Logging;
 
-#nullable enable
-
 namespace MXLogger
 {
     public class MXLoggerProvider : ILoggerProvider, ISupportExternalScope

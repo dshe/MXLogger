@@ -3,8 +3,6 @@ using System;
 using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Logging.Abstractions;
 
-#nullable enable
-
 namespace MXLogger
 {
     public static class Extensions

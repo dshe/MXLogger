@@ -1,8 +1,6 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
 
-#nullable enable
-
 namespace MXLogger
 {
     internal class MXLogger : ILogger
