@@ -38,10 +38,12 @@ namespace MXLoggerTest
             var factory = new LoggerFactory();
             factory.AddProvider(provider);
             ILogger logger = factory.CreateLogger<LoggerTest>();
-            logger.LogCritical("message1");
-            logger.LogCritical("message2");
+
+            logger.LogInformation("message1");
+            logger.LogWarning("message2");
             Thread.Sleep(1);
             logger.LogCritical("message3");
+
             provider.WriteTo(WriteLine);
         }
     }
