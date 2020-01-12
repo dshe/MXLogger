@@ -41,7 +41,7 @@ namespace MXLoggerTest
 
             logger.LogInformation("message1");
             logger.LogWarning("message2");
-            Thread.Sleep(1);
+            Thread.Sleep(1000);
             logger.LogCritical("message3");
 
             provider.WriteTo(WriteLine);

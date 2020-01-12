@@ -39,7 +39,14 @@ namespace MXLogger
             return scopes.AsReadOnly();
         }
 
-        public IList<LogInfo> LogEntries { get; } = new List<LogInfo>();
+        public ConcurrentBag<LogInfo> LogEntries { get; } = new ConcurrentBag<LogInfo>();
+
+        public void Write(string text)
+        {
+            var time = Stopwatch.GetTimestamp();
+            var logEntry = new LogInfo("", LogLevel.Critical, 0, null, null, text, time);
+            LogEntries.Add(logEntry);
+        }
 
         // called by XUnitLogger.Log(...)
         internal void Log(LogInfo logEntry)
@@ -78,7 +85,7 @@ namespace MXLogger
             var sb = new StringBuilder();
 
             if (logInfo.Time != 0 && WriteLine == null)
-                sb.AppendFormat("{0:####0.000} ", TimeSpan.FromTicks(logInfo.Time - Time).TotalMilliseconds);
+                sb.AppendFormat("{0:00000.000} ", TimeSpan.FromTicks(logInfo.Time - Time).TotalMilliseconds);
 
             var scopes = GetScopes(logInfo.State);
             if (scopes.Any())
@@ -90,7 +97,6 @@ namespace MXLogger
             }
 
             sb.Append($"{logInfo.LogLevel.ToShortString()}\t  ");
-
             sb.Append($"{logInfo.Category}\t  ");
 
             if (logInfo.EventId.Id != 0)
