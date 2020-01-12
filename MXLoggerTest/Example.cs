@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
 using MXLogger;
+using System.Threading;
 
 namespace MXLoggerTest
 {
@@ -17,7 +18,6 @@ namespace MXLoggerTest
         {
             ILoggerFactory factory = new LoggerFactory().AddMXLogger(WriteLine);
             ILogger logger = factory.CreateLogger<LoggerTest>();
-
             logger.LogCritical("message");
         }
 
@@ -29,6 +29,20 @@ namespace MXLoggerTest
             IServiceProvider serviceProvider = services.BuildServiceProvider();
             ILogger logger = serviceProvider.GetService<ILogger<LoggerTest>>();
             logger.LogInformation("message");
+        }
+
+        [Fact]
+        public void TimestampTest()
+        {
+            var provider = new MXLoggerProvider(LogLevel.Trace);
+            var factory = new LoggerFactory();
+            factory.AddProvider(provider);
+            ILogger logger = factory.CreateLogger<LoggerTest>();
+            logger.LogCritical("message1");
+            logger.LogCritical("message2");
+            Thread.Sleep(1);
+            logger.LogCritical("message3");
+            provider.WriteTo(WriteLine);
         }
     }
 }

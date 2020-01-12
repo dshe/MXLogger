@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 
 namespace MXLogger
@@ -27,8 +28,9 @@ namespace MXLogger
         {
             if (((ILogger)this).IsEnabled(logLevel))
             {
+                var time = Stopwatch.GetTimestamp();
                 string? text = formatter?.Invoke(state, exception);
-                var logEntry = new LogInfo(Category, logLevel, eventId, state, exception, text);
+                var logEntry = new LogInfo(Category, logLevel, eventId, state, exception, text, time);
                 Provider.Log(logEntry);
             }
         }

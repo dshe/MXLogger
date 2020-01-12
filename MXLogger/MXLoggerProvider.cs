@@ -4,16 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Collections.Concurrent;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 
 namespace MXLogger
 {
     public class MXLoggerProvider : ILoggerProvider, ISupportExternalScope
     {
+        private readonly long Time = Stopwatch.GetTimestamp();
         public LogLevel LogLevel { get; }
-        private readonly Action<string> WriteLine;
+        private readonly Action<string>? WriteLine;
+        public MXLoggerProvider(LogLevel logLevel = LogLevel.Trace) => LogLevel = logLevel;
         public MXLoggerProvider(Action<string> writeLine, LogLevel logLevel = LogLevel.Trace)
         {
-            WriteLine = writeLine ?? throw new ArgumentNullException(nameof(writeLine));
+            WriteLine = writeLine;
             LogLevel = logLevel;
         }
 
@@ -42,6 +45,8 @@ namespace MXLogger
         internal void Log(LogInfo logEntry)
         {
             LogEntries.Add(logEntry);
+            if (WriteLine == null)
+                return;
             var str = Format(logEntry);
             if (str == null)
                 return;
@@ -51,7 +56,18 @@ namespace MXLogger
             }
             catch (Exception)
             {
+                ;
             }
+        }
+
+        public void WriteTo(Action<string> writeLine)
+        {
+            var str = LogEntries
+                .OrderBy(e => e.Time)
+                .Select(e => Format(e))
+                .Aggregate(new StringBuilder(),(current, next) => current.Append(current.Length == 0 ? "" : "\r\n").Append(next))
+                .ToString();
+            writeLine(str);
         }
 
         public virtual string? Format(LogInfo logInfo)
@@ -60,6 +76,9 @@ namespace MXLogger
                 throw new ArgumentNullException(nameof(logInfo));
 
             var sb = new StringBuilder();
+
+            if (logInfo.Time != 0 && WriteLine == null)
+                sb.AppendFormat("{0:####0.000} ", TimeSpan.FromTicks(logInfo.Time - Time).TotalMilliseconds);
 
             var scopes = GetScopes(logInfo.State);
             if (scopes.Any())

@@ -26,7 +26,7 @@ namespace MXLogger
 
         public static string ToShortString(this LogLevel level)
         {
-            switch (level) // (switch expression will not compile on Appveyor)
+            switch (level) // Note: switch expression will not compile on Appveyor
             {
                 case LogLevel.Trace:       return "Trace";
                 case LogLevel.Debug:       return "Debug";
