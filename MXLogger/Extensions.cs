@@ -10,8 +10,7 @@ namespace MXLogger
         public static ILoggingBuilder AddMXLogger(this ILoggingBuilder builder, Action<string> writeLine, LogLevel logLevel = LogLevel.Trace)
         {
             var provider = new MXLoggerProvider(writeLine, logLevel);
-            builder.AddProvider(provider);
-            return builder;
+            return builder.AddProvider(provider);
         }
 
         public static ILoggerFactory AddMXLogger(this ILoggerFactory factory, Action<string> writeLine, LogLevel logLevel = LogLevel.Trace)

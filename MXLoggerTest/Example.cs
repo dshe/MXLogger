@@ -30,21 +30,5 @@ namespace MXLoggerTest
             ILogger logger = serviceProvider.GetService<ILogger<LoggerTest>>();
             logger.LogInformation("message");
         }
-
-        [Fact]
-        public void TimestampTest()
-        {
-            var provider = new MXLoggerProvider(LogLevel.Trace);
-            var factory = new LoggerFactory();
-            factory.AddProvider(provider);
-            ILogger logger = factory.CreateLogger<LoggerTest>();
-
-            logger.LogInformation("message1");
-            logger.LogWarning("message2");
-            Thread.Sleep(1000);
-            logger.LogCritical("message3");
-
-            provider.WriteTo(WriteLine);
-        }
     }
 }

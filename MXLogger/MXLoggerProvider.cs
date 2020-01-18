@@ -10,18 +10,14 @@ namespace MXLogger
 {
     public class MXLoggerProvider : ILoggerProvider, ISupportExternalScope
     {
-        private readonly long Time = Stopwatch.GetTimestamp();
         public LogLevel LogLevel { get; }
-        private readonly Action<string>? WriteLine;
-        public MXLoggerProvider(LogLevel logLevel = LogLevel.Trace) => LogLevel = logLevel;
-        public MXLoggerProvider(Action<string> writeLine, LogLevel logLevel = LogLevel.Trace)
-        {
-            WriteLine = writeLine;
-            LogLevel = logLevel;
-        }
-
+        private readonly Action<string> WriteLine;
+        public MXLoggerProvider(Action<string> writeLine, LogLevel logLevel = LogLevel.Trace) =>
+            (WriteLine, LogLevel) = (writeLine, logLevel);
         private readonly ConcurrentDictionary<string, MXLogger> loggers = new ConcurrentDictionary<string, MXLogger>();
-        ILogger ILoggerProvider.CreateLogger(string Category) => loggers.GetOrAdd(Category, category => new MXLogger(this, category));
+
+        ILogger ILoggerProvider.CreateLogger(string Category) =>
+            loggers.GetOrAdd(Category, category => new MXLogger(this, category));
 
         void ISupportExternalScope.SetScopeProvider(IExternalScopeProvider scopeProvider) => ScopeProvider = scopeProvider;
         internal IExternalScopeProvider? ScopeProvider;
@@ -43,8 +39,7 @@ namespace MXLogger
 
         public void Write(string text)
         {
-            var time = Stopwatch.GetTimestamp();
-            var logEntry = new LogInfo("", LogLevel.Critical, 0, null, null, text, time);
+            var logEntry = new LogInfo("", LogLevel.Critical, 0, null, null, text);
             LogEntries.Add(logEntry);
         }
 
@@ -52,8 +47,6 @@ namespace MXLogger
         internal void Log(LogInfo logEntry)
         {
             LogEntries.Add(logEntry);
-            if (WriteLine == null)
-                return;
             var str = Format(logEntry);
             if (str == null)
                 return;
@@ -67,25 +60,9 @@ namespace MXLogger
             }
         }
 
-        public void WriteTo(Action<string> writeLine)
-        {
-            var str = LogEntries
-                .OrderBy(e => e.Time)
-                .Select(e => Format(e))
-                .Aggregate(new StringBuilder(),(current, next) => current.Append(current.Length == 0 ? "" : "\r\n").Append(next))
-                .ToString();
-            writeLine(str);
-        }
-
         public virtual string? Format(LogInfo logInfo)
         {
-            if (logInfo == null)
-                throw new ArgumentNullException(nameof(logInfo));
-
             var sb = new StringBuilder();
-
-            if (logInfo.Time != 0 && WriteLine == null)
-                sb.AppendFormat("{0:00000.000} ", TimeSpan.FromTicks(logInfo.Time - Time).TotalMilliseconds);
 
             var scopes = GetScopes(logInfo.State);
             if (scopes.Any())
