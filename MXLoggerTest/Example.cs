@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
 using MXLogger;
-using System.Threading;
 
 namespace MXLoggerTest
 {
