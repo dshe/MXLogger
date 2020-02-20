@@ -50,7 +50,7 @@ public class LoggerDependencyInjectionTest
     {
         IServiceCollection services = new ServiceCollection();
         services.AddLogging(builder => builder.AddMXLogger(output.WriteLine));
-        ServiceProvider =services.BuildServiceProvider();
+        ServiceProvider = services.BuildServiceProvider();
     }
 
     [Fact]
