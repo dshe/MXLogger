@@ -19,26 +19,18 @@ using MXLogger;
 
 public class LoggerTest
 {
-    protected readonly ILoggerFactory LoggerFactory;
-    protected readonly ILogger Logger;
+    private readonly ILogger Logger;
 
     public LoggerTest(ITestOutputHelper output)
     {
-        LoggerFactory = new LoggerFactory().AddMXLogger(output.WriteLine);
-        Logger = LoggerFactory.CreateLogger<LoggerTest>();
+        var loggerFactory = new LoggerFactory().AddMXLogger(output.WriteLine);
+        Logger = loggerFactory.CreateLogger("CategoryName");
     }
 
     [Fact]
-    public void Test1()
+    public void Test()
     {
         Logger.LogInformation("message");
-    }
-
-    [Fact]
-    public void Test2()
-    {
-        var logger = LoggerFactory.CreateLogger("SomeLoggerCategoryName");
-        logger.LogDebug("message");
     }
 }
 
