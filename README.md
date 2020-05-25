@@ -19,27 +19,45 @@ using MXLogger;
 
 public class LoggerTest
 {
-    private readonly Action<string> WriteLine;
-    public LoggerTest(ITestOutputHelper output) => WriteLine = output.WriteLine;
+    protected readonly ILoggerFactory LoggerFactory;
+    protected readonly ILogger Logger;
 
-    [Fact]
-    public void FactoryTest()
+    public LoggerTest(ITestOutputHelper output)
     {
-        ILoggerFactory factory = new LoggerFactory().AddMXLogger(WriteLine);
-        ILogger logger = factory.CreateLogger<LoggerTest>();
-
-        logger.LogCritical("message");
+        LoggerFactory = new LoggerFactory().AddMXLogger(output.WriteLine);
+        Logger = LoggerFactory.CreateLogger<LoggerTest>();
     }
 
     [Fact]
-    public void DependencyInjectionTest()
+    public void Test1()
+    {
+        Logger.LogInformation("message");
+    }
+
+    [Fact]
+    public void Test2()
+    {
+        var logger = LoggerFactory.CreateLogger("SomeLoggerCategoryName");
+        logger.LogDebug("message");
+    }
+}
+
+public class LoggerDependencyInjectionTest
+{
+    protected readonly IServiceProvider ServiceProvider;
+
+    public LoggerDependencyInjectionTest(ITestOutputHelper output)
     {
         IServiceCollection services = new ServiceCollection();
-        services.AddLogging(builder => builder.AddMXLogger(WriteLine));
-        IServiceProvider serviceProvider = services.BuildServiceProvider();
-        ILogger logger = serviceProvider.GetService<ILogger<LoggerTest>>();
+        services.AddLogging(builder => builder.AddMXLogger(output.WriteLine));
+        ServiceProvider = services.BuildServiceProvider();
+    }
 
-        logger.LogInformation("message");
+    [Fact]
+    public void Test()
+    {
+        var logger = ServiceProvider.GetService<ILogger<LoggerTest>>();
+        logger.LogCritical("message");
     }
 }
 ```
