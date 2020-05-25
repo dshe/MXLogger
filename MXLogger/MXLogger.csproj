@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\..\..\worm64.png">
+    <None Include="..\worm64.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
