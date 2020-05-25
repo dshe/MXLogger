@@ -10,13 +10,15 @@ namespace MXLoggerTest
 {
     public class LogEntryTest
     {
+        private readonly Action<string> WriteLine;
         private LogInfo LastEntry => LoggerProvider.LogEntries.LastOrDefault();
         private readonly MXLoggerProvider LoggerProvider;
         private readonly ILogger Logger;
 
         public LogEntryTest(ITestOutputHelper output)
         {
-            LoggerProvider = new MXLoggerProvider(output.WriteLine);
+            WriteLine = output.WriteLine;
+            LoggerProvider = new MXLoggerProvider(WriteLine);
             var loggerFactory = new LoggerFactory(new[] { LoggerProvider });
             Logger = loggerFactory.CreateLogger("category");
         }
@@ -24,12 +26,17 @@ namespace MXLoggerTest
         [Fact]
         public void LoggingLevelTest()
         {
-            Assert.Equal(LogLevel.Trace, LoggerProvider.LogLevel);
-            Assert.Null(LastEntry);
-            Logger.LogDebug("debug message");
-            Logger.LogInformation("information message");
-            Logger.LogCritical("critical message");
-            Assert.Equal(3, LoggerProvider.LogEntries.Count);
+            var loggerProvider = new MXLoggerProvider(WriteLine, LogLevel.Warning);
+            var loggerFactory = new LoggerFactory(new[] { loggerProvider });
+            var logger = loggerFactory.CreateLogger("category");
+
+            logger.LogTrace("trace message");
+            logger.LogDebug("debug message");
+            logger.LogInformation("information message");
+            logger.LogWarning("warning message");
+            logger.LogError("error message");
+            logger.LogCritical("critical message");
+            Assert.Equal(3, loggerProvider.LogEntries.Count);
         }
 
         [Fact]
