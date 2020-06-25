@@ -3,8 +3,10 @@
 ***Minimalist Microsoft.Extensions.Logging Provider***
 - compatible with xUnit and other test frameworks
 - NetStandard 2.0 library
-- fully customizable formatting
+- customizable formatting
 - provides output caching
+- supports scopes
+- supports Microsoft.Extensions.DependencyInjection
 - dependencies: Microsoft.Extensions.Logging
 
 **Example**
@@ -17,14 +19,14 @@ using Xunit;
 using Xunit.Abstractions;
 using MXLogger;
 
-public class LoggerTest
+public class SimpleLoggerTest
 {
-    private readonly ILogger Logger;
+    protected readonly ILogger Logger;
 
-    public LoggerTest(ITestOutputHelper output)
+    public SimpleLoggerTest(ITestOutputHelper output)
     {
         var loggerFactory = new LoggerFactory().AddMXLogger(output.WriteLine);
-        Logger = loggerFactory.CreateLogger("CategoryName");
+        Logger = loggerFactory.CreateLogger<SimpleLoggerTest>();
     }
 
     [Fact]
@@ -34,13 +36,23 @@ public class LoggerTest
     }
 }
 
+public class MyDependency
+{
+    public readonly ILogger<MyDependency> Logger;
+    public MyDependency(ILogger<MyDependency> logger)
+    {
+        Logger = logger;
+    }
+}
+
 public class LoggerDependencyInjectionTest
 {
-    protected readonly IServiceProvider ServiceProvider;
+    public readonly IServiceProvider ServiceProvider;
 
     public LoggerDependencyInjectionTest(ITestOutputHelper output)
     {
         IServiceCollection services = new ServiceCollection();
+        services.AddTransient<MyDependency>();
         services.AddLogging(builder => builder.AddMXLogger(output.WriteLine));
         ServiceProvider = services.BuildServiceProvider();
     }
@@ -48,8 +60,8 @@ public class LoggerDependencyInjectionTest
     [Fact]
     public void Test()
     {
-        var logger = ServiceProvider.GetService<ILogger<LoggerTest>>();
-        logger.LogCritical("message");
+        var myDependencyObject = ServiceProvider.GetService<MyDependency>();
+        myDependencyObject.Logger.LogCritical("message");
     }
 }
 ```
