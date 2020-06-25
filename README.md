@@ -19,14 +19,14 @@ using Xunit;
 using Xunit.Abstractions;
 using MXLogger;
 
-public class SimpleLoggerTest
+public class SimpleTest
 {
     public readonly ILogger Logger;
 
-    public SimpleLoggerTest(ITestOutputHelper output)
+    public SimpleTest(ITestOutputHelper output)
     {
         var loggerFactory = new LoggerFactory().AddMXLogger(output.WriteLine);
-        Logger = loggerFactory.CreateLogger<SimpleLoggerTest>();
+        Logger = loggerFactory.CreateLogger<SimpleTest>();
     }
 
     [Fact]
@@ -46,11 +46,11 @@ public class MyDependency
     }
 }
 
-public class LoggerDependencyInjectionTest
+public class DependencyInjectionTest
 {
     public readonly IServiceProvider ServiceProvider;
 
-    public LoggerDependencyInjectionTest(ITestOutputHelper output)
+    public DependencyInjectionTest(ITestOutputHelper output)
     {
         IServiceCollection services = new ServiceCollection();
         services.AddTransient<MyDependency>();
