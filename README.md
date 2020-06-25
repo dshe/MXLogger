@@ -21,7 +21,7 @@ using MXLogger;
 
 public class SimpleLoggerTest
 {
-    protected readonly ILogger Logger;
+    public readonly ILogger Logger;
 
     public SimpleLoggerTest(ITestOutputHelper output)
     {
@@ -39,6 +39,7 @@ public class SimpleLoggerTest
 public class MyDependency
 {
     public readonly ILogger<MyDependency> Logger;
+    
     public MyDependency(ILogger<MyDependency> logger)
     {
         Logger = logger;
@@ -60,8 +61,8 @@ public class LoggerDependencyInjectionTest
     [Fact]
     public void Test()
     {
-        var myDependencyObject = ServiceProvider.GetService<MyDependency>();
-        myDependencyObject.Logger.LogCritical("message");
+        var myDependency = ServiceProvider.GetService<MyDependency>();
+        myDependency.Logger.LogCritical("message");
     }
 }
 ```
