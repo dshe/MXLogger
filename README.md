@@ -48,21 +48,21 @@ public class MyDependency
 
 public class DependencyInjectionTest
 {
-    public readonly IServiceProvider ServiceProvider;
+    public readonly MyDependency MyDependency;
 
     public DependencyInjectionTest(ITestOutputHelper output)
     {
-        IServiceCollection services = new ServiceCollection();
-        services.AddTransient<MyDependency>();
-        services.AddLogging(builder => builder.AddMXLogger(output.WriteLine));
-        ServiceProvider = services.BuildServiceProvider();
+        MyDependency = new ServiceCollection()
+            .AddTransient<MyDependency>()
+            .AddLogging(builder => builder.AddMXLogger(output.WriteLine))
+            .BuildServiceProvider()
+            .GetService<MyDependency>();
     }
 
     [Fact]
     public void Test()
     {
-        var myDependency = ServiceProvider.GetService<MyDependency>();
-        myDependency.Logger.LogCritical("message");
+        MyDependency.Logger.LogCritical("message");
     }
 }
 ```
