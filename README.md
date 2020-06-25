@@ -9,12 +9,10 @@
 - supports Microsoft.Extensions.DependencyInjection
 - dependencies: Microsoft.Extensions.Logging
 
-**Example**
+**Examples**
 
 ```csharp
-using System;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
 using MXLogger;
@@ -36,10 +34,18 @@ public class SimpleTest
     }
 }
 
+```
+
+```csharp
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using Xunit;
+using Xunit.Abstractions;
+using MXLogger;
+
 public class MyDependency
 {
     public readonly ILogger<MyDependency> Logger;
-    
     public MyDependency(ILogger<MyDependency> logger)
     {
         Logger = logger;
