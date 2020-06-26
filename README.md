@@ -24,7 +24,7 @@ public class SimpleTest
     public SimpleTest(ITestOutputHelper output)
     {
         var loggerFactory = new LoggerFactory().AddMXLogger(output.WriteLine);
-        Logger = loggerFactory.CreateLogger<SimpleTest>();
+        Logger = loggerFactory.CreateLogger("CategoryName");
     }
 
     [Fact]
