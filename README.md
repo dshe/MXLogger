@@ -45,7 +45,7 @@ using MXLogger;
 
 public class MyDependency
 {
-    public readonly ILogger<MyDependency> Logger;
+    public readonly ILogger Logger;
     
     public MyDependency(ILogger<MyDependency> logger)
     {
