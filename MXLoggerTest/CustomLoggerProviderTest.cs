@@ -6,8 +6,6 @@ using Xunit;
 using Xunit.Abstractions;
 using MXLogger;
 
-
-
 namespace MXLoggerTest
 {
     public class MyCustomLoggerProvider : MXLoggerProvider

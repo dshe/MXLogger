@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Collections.Concurrent;
 using Microsoft.Extensions.Logging;
-using System.Diagnostics;
 
 namespace MXLogger
 {
