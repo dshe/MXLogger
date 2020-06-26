@@ -43,11 +43,11 @@ using Xunit;
 using Xunit.Abstractions;
 using MXLogger;
 
-public class MyDependency
+public class MyComponent
 {
     public readonly ILogger Logger;
     
-    public MyDependency(ILogger<MyDependency> logger)
+    public MyComponent(ILogger<MyComponent> logger)
     {
         Logger = logger;
     }
@@ -55,21 +55,21 @@ public class MyDependency
 
 public class DependencyInjectionTest
 {
-    public readonly MyDependency MyDependency;
+    public readonly MyComponent MyComponent;
 
     public DependencyInjectionTest(ITestOutputHelper output)
     {
-        MyDependency = new ServiceCollection()
-            .AddTransient<MyDependency>()
+        MyComponent = new ServiceCollection()
+            .AddTransient<MyComponent>()
             .AddLogging(builder => builder.AddMXLogger(output.WriteLine))
             .BuildServiceProvider()
-            .GetService<MyDependency>();
+            .GetService<MyComponent>();
     }
 
     [Fact]
     public void Test()
     {
-        MyDependency.Logger.LogCritical("message");
+        MyComponent.Logger.LogCritical("message");
     }
 }
 ```
