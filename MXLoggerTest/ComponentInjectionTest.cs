@@ -16,12 +16,12 @@ namespace MXLoggerTest
         [Fact]
         public void Test()
         {
-            var provider = new MXLoggerProvider(WriteLine);
             var services = new ServiceCollection();
+            var provider = new MXLoggerProvider(WriteLine);
             services.AddLogging(builder => builder.AddProvider(provider));
             services.AddSingleton<MyComponent>();
             var serviceProvider = services.BuildServiceProvider();
-            MyComponent myComponent = serviceProvider.GetRequiredService<MyComponent>();
+            MyComponent myComponent = serviceProvider.GetService<MyComponent>();
 
             myComponent.Log("test");
             Assert.Equal("Info\t  MXLoggerTest.MyComponent\t  test\t  ", provider.Format(provider.LogEntries.Last()));

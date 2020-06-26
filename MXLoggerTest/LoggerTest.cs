@@ -8,10 +8,10 @@ using MXLogger;
 
 namespace MXLoggerTest
 {
-    public class LoggerTest0
+    public class LoggerFormatTest
     {
         private readonly Action<string> WriteLine;
-        public LoggerTest0(ITestOutputHelper output) => WriteLine = output.WriteLine;
+        public LoggerFormatTest(ITestOutputHelper output) => WriteLine = output.WriteLine;
 
         [Fact]
         public void InjectionTest()
@@ -25,7 +25,7 @@ namespace MXLoggerTest
             logger1.LogInformation("test");
             Assert.Equal("test", loggerProvider.LogEntries.Last().Text);
 
-            var logger2 = serviceProvider.GetService<ILogger<LoggerTest>>();
+            var logger2 = serviceProvider.GetService<ILogger<LoggerFormatTest>>();
             logger2.LogInformation("test");
             Assert.Equal("test", loggerProvider.LogEntries.Last().Text);
         }
@@ -35,7 +35,7 @@ namespace MXLoggerTest
         {
             var services = new ServiceCollection().AddLogging(builder => builder.AddMXLogger(WriteLine));
             var serviceProvider = services.BuildServiceProvider();
-            var logger = serviceProvider.GetService<ILogger<LoggerTest>>();
+            var logger = serviceProvider.GetService<ILogger<LoggerFormatTest>>();
             logger.LogInformation("test");
         }
 
@@ -44,9 +44,9 @@ namespace MXLoggerTest
         {
             var loggerProvider = new MXLoggerProvider(WriteLine);
             var factory = new LoggerFactory(new[] { loggerProvider });
-            var logger = factory.CreateLogger<LoggerTest>();
+            var logger = factory.CreateLogger<LoggerFormatTest>();
             logger.LogInformation("anything");
-            Assert.Equal("MXLoggerTest.LoggerTest", loggerProvider.LogEntries.Last().Category);
+            Assert.Equal("MXLoggerTest.LoggerFormatTest", loggerProvider.LogEntries.Last().Category);
             factory.Dispose();
         }
 
@@ -54,7 +54,7 @@ namespace MXLoggerTest
         public void LoggingFactoryWithExtensionTest()
         {
             var factory = new LoggerFactory().AddMXLogger(WriteLine);
-            var logger = factory.CreateLogger<LoggerTest>();
+            var logger = factory.CreateLogger<LoggerFormatTest>();
             logger.LogInformation("anything");
             factory.Dispose();
         }
@@ -75,7 +75,7 @@ namespace MXLoggerTest
         {
             var loggerProvider = new MXLoggerProvider(WriteLine);
             var factory = new LoggerFactory(new[] { loggerProvider });
-            var logger = factory.CreateLogger<LoggerTest>();
+            var logger = factory.CreateLogger<LoggerFormatTest>();
 
             logger.LogError("outsideLoop");
             using (logger.BeginScope("scope1"))

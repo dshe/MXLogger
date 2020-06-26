@@ -28,7 +28,7 @@ namespace MXLoggerTest
             var services = new ServiceCollection().AddLogging(builder => builder.AddProvider(provider));
             var serviceProvider = services.BuildServiceProvider();
             var factory = serviceProvider.GetService<ILoggerFactory>();
-            var logger = serviceProvider.GetService<ILogger<LoggerTest>>();
+            var logger = serviceProvider.GetService<ILogger<CustomLoggerProviderTest>>();
             logger.LogInformation("test");
             Assert.Equal("custom:test", provider.Format(provider.LogEntries.Last()));
         }
@@ -38,7 +38,7 @@ namespace MXLoggerTest
         {
             var provider = new MyCustomLoggerProvider(WriteLine);
             var factory = new LoggerFactory(new[] { provider });
-            var logger = factory.CreateLogger<LoggerTest>();
+            var logger = factory.CreateLogger<CustomLoggerProviderTest>();
             logger.LogInformation("test");
             Assert.Equal("custom:test", provider.Format(provider.LogEntries.Last()));
             factory.Dispose();

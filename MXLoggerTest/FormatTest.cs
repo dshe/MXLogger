@@ -4,8 +4,6 @@ using Xunit;
 using Xunit.Abstractions;
 using MXLogger;
 
-
-
 namespace MXLoggerTest
 {
     public class LogFormatTest
