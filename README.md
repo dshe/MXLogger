@@ -15,7 +15,7 @@
 PM> Install-Package MXLogger
 ```
 
-### Examples ###
+### Simple Example ###
 
 ```csharp
 using Microsoft.Extensions.Logging;
@@ -39,10 +39,11 @@ public class SimpleTest
         Logger.LogInformation("message");
     }
 }
-
+```
+```csharp
 Xunit output: "Info	  CategoryName	  message"
 ```
-
+### Dependency Injection Example ###
 ```csharp
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
@@ -79,6 +80,7 @@ public class DependencyInjectionTest
         MyComponent.Logger.LogCritical("message");
     }
 }
-
+```
+```csharp
 Xunit output: "Crit	  Namespace.MyComponent	  message"
 ```
