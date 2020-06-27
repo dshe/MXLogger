@@ -9,6 +9,12 @@
 - supports Microsoft.Extensions.DependencyInjection
 - dependencies: Microsoft.Extensions.Logging
 
+
+**Installation**
+```csharp
+PM> Install-Package MXLogger
+```
+
 **Examples**
 
 ```csharp
