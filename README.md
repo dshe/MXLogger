@@ -40,6 +40,7 @@ public class SimpleTest
     }
 }
 
+Xunit output: "Info	  CategoryName	  message"
 ```
 
 ```csharp
@@ -78,4 +79,6 @@ public class DependencyInjectionTest
         MyComponent.Logger.LogCritical("message");
     }
 }
+
+Xunit output: "Crit	  Namespace.MyComponent	  message"
 ```
