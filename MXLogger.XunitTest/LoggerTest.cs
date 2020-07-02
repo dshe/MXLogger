@@ -6,7 +6,7 @@ using Xunit;
 using Xunit.Abstractions;
 using MXLogger;
 
-namespace MXLoggerTest
+namespace MXLoggerXunitTest
 {
     public class LoggerFormatTest
     {
@@ -46,7 +46,7 @@ namespace MXLoggerTest
             var factory = new LoggerFactory(new[] { loggerProvider });
             var logger = factory.CreateLogger<LoggerFormatTest>();
             logger.LogInformation("anything");
-            Assert.Equal("MXLoggerTest.LoggerFormatTest", loggerProvider.LogEntries.Last().Category);
+            Assert.Equal("MXLoggerXunitTest.LoggerFormatTest", loggerProvider.LogEntries.Last().Category);
             factory.Dispose();
         }
 

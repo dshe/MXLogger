@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using MXLogger;
 
-namespace MXLoggerTest
+namespace MXLoggerXunitTest
 { 
     public class InjectionTest
     {
@@ -24,7 +24,7 @@ namespace MXLoggerTest
             MyComponent myComponent = serviceProvider.GetService<MyComponent>();
 
             myComponent.Log("test");
-            Assert.Equal("Info\t  MXLoggerTest.MyComponent\t  test\t  ", provider.Format(provider.LogEntries.Last()));
+            Assert.Equal("Info\t  MXLoggerXunitTest.MyComponent\t  test\t  ", provider.Format(provider.LogEntries.Last()));
         }
     }
 

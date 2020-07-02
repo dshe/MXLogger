@@ -1,3 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("MXLoggerTest")]
+[assembly: InternalsVisibleTo("MXLoggerMSTest")]
+[assembly: InternalsVisibleTo("MXLoggerNUnitTest")]
+[assembly: InternalsVisibleTo("MXLoggerXunitTest")]

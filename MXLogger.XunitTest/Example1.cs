@@ -3,7 +3,7 @@ using Xunit;
 using Xunit.Abstractions;
 using MXLogger;
 
-namespace MXLoggerTest1
+namespace MXLoggerXunitTest0
 {
     public class SimpleTest
     {
@@ -11,7 +11,7 @@ namespace MXLoggerTest1
 
         public SimpleTest(ITestOutputHelper output)
         {
-            var loggerFactory = new LoggerFactory().AddMXLogger(output.WriteLine);
+            ILoggerFactory loggerFactory = new LoggerFactory().AddMXLogger(output.WriteLine, LogLevel.Trace);
             Logger = loggerFactory.CreateLogger("CategoryName");
         }
 

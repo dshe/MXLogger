@@ -11,8 +11,10 @@ namespace MXLogger
     {
         public LogLevel LogLevel { get; }
         private readonly Action<string> WriteLine;
+
         public MXLoggerProvider(Action<string> writeLine, LogLevel logLevel = LogLevel.Trace) =>
             (WriteLine, LogLevel) = (writeLine, logLevel);
+
         private readonly ConcurrentDictionary<string, MXLogger> loggers = new ConcurrentDictionary<string, MXLogger>();
 
         ILogger ILoggerProvider.CreateLogger(string Category) =>
