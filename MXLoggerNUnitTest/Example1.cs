@@ -2,6 +2,8 @@
 using NUnit.Framework;
 using MXLogger;
 
+[assembly: Parallelizable(ParallelScope.Children)]
+
 namespace MXLoggerNUnitTest
 {
     public class SimpleTest
