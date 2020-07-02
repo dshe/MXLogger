@@ -1,7 +1,7 @@
 ## MXLogger&nbsp;&nbsp;[![Build status](https://ci.appveyor.com/api/projects/status/e51gaj9271kvpwhc?svg=true)](https://ci.appveyor.com/project/dshe/mxlogger) [![NuGet](https://img.shields.io/nuget/vpre/MXLogger.svg)](https://www.nuget.org/packages/MXLogger/) [![License](https://img.shields.io/badge/license-Apache%202.0-7755BB.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ***Minimalist Microsoft.Extensions.Logging Provider***
-- compatible with xUnit and other test frameworks
+- compatible with MSTest, Xunit, NUnit and other test frameworks
 - NetStandard 2.0 library
 - customizable formatting
 - provides output caching
@@ -9,7 +9,12 @@
 - supports Microsoft.Extensions.DependencyInjection
 - dependencies: Microsoft.Extensions.Logging
 
-**Examples**
+### Installation ###
+```csharp
+PM> Install-Package MXLogger
+```
+
+### Simple Example ###
 
 ```csharp
 using Microsoft.Extensions.Logging;
@@ -23,7 +28,7 @@ public class SimpleTest
 
     public SimpleTest(ITestOutputHelper output)
     {
-        var loggerFactory = new LoggerFactory().AddMXLogger(output.WriteLine);
+        ILoggerFactory loggerFactory = new LoggerFactory().AddMXLogger(output.WriteLine);
         Logger = loggerFactory.CreateLogger("CategoryName");
     }
 
@@ -33,9 +38,11 @@ public class SimpleTest
         Logger.LogInformation("message");
     }
 }
-
 ```
-
+```csharp
+Xunit output: "Info	  CategoryName	  message"
+```
+### Dependency Injection Example ###
 ```csharp
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
@@ -72,4 +79,7 @@ public class DependencyInjectionTest
         MyComponent.Logger.LogCritical("message");
     }
 }
+```
+```csharp
+Xunit output: "Crit	  Namespace.MyComponent	  message"
 ```
