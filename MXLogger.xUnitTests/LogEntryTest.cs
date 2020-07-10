@@ -1,17 +1,16 @@
-﻿using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Logging;
 using Xunit;
 using Xunit.Abstractions;
-using MXLogger;
 
-namespace MXLoggerXunitTest
+namespace MXLogger.xUnitTests
 {
     public class LogEntryTest
     {
         private readonly Action<string> WriteLine;
-        private LogInfo LastEntry => LoggerProvider.LogEntries.LastOrDefault();
+        private LogInfo LastEntry => LoggerProvider.GetLogEntries().LastOrDefault();
         private readonly MXLoggerProvider LoggerProvider;
         private readonly ILogger Logger;
 
@@ -36,7 +35,7 @@ namespace MXLoggerXunitTest
             logger.LogWarning("warning message");
             logger.LogError("error message");
             logger.LogCritical("critical message");
-            Assert.Equal(3, loggerProvider.LogEntries.Count);
+            Assert.Equal(3, loggerProvider.GetLogEntries().Count);
         }
 
         [Fact]

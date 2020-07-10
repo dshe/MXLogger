@@ -1,9 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
+using NUnit.Framework;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MXLogger;
 
-namespace MXLoggerMSTest
+namespace MXLogger.NUnitTests
 {
     public class MyComponent
     {
@@ -15,27 +14,23 @@ namespace MXLoggerMSTest
         }
     }
 
-    [TestClass]
-    public class DependencyInjectionTest
+    public class InjectionExample
     {
-        public TestContext? TestContext { get; set; }
+        public MyComponent MyComponent;
 
-        public MyComponent? MyComponent { get; set; }
-
-        [TestInitialize]
-        public void TestInitialize()
+        public InjectionExample()
         {
             MyComponent = new ServiceCollection()
                 .AddTransient<MyComponent>()
-                .AddLogging(builder => builder.AddMXLogger(TestContext!.WriteLine, LogLevel.Trace))
+                .AddLogging(builder => builder.AddMXLogger(TestContext.WriteLine, LogLevel.Trace))
                 .BuildServiceProvider()
                 .GetService<MyComponent>();
         }
 
-        [TestMethod]
+        [Test]
         public void Test()
         {
-            MyComponent!.Logger.LogCritical("message");
+            MyComponent.Logger.LogCritical("message");
         }
     }
 }

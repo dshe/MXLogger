@@ -7,14 +7,14 @@
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/dshe/MXLogger</PackageProjectUrl>
     <PackageIconUrl></PackageIconUrl>
-    <PackageTags>test testing logger logging microsoft-extensions microsoft-extensions-logging xunit mstest nunit</PackageTags>
+    <PackageTags>test testing logger logging microsoft-extensions microsoft-extensions-logging xunit mstest nunit dependency-injection</PackageTags>
     <Description>A minimal Microsoft.Extensions.Logging provider for test frameworks such as MSTest, xUnit and NUnit.</Description>
     <Authors>DavidS</Authors>
     <Company>DavidS</Company>
-    <Version>1.1.0</Version>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
-    <FileVersion>1.1.0.0</FileVersion>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.1.1</Version>
+    <AssemblyVersion>1.1.1.0</AssemblyVersion>
+    <FileVersion>1.1.1.0</FileVersion>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageIcon>worm64.png</PackageIcon>
   </PropertyGroup>
 

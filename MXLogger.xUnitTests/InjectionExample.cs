@@ -2,9 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
-using MXLogger;
 
-namespace MXLoggerXunitTest1
+namespace MXLogger.xUnitTests
 {
     public class MyComponent
     {
@@ -16,11 +15,11 @@ namespace MXLoggerXunitTest1
         }
     }
 
-    public class DependencyInjectionTest
+    public class InjectionExample
     {
         public readonly MyComponent MyComponent;
 
-        public DependencyInjectionTest(ITestOutputHelper output)
+        public InjectionExample(ITestOutputHelper output)
         {
             MyComponent = new ServiceCollection()
                 .AddTransient<MyComponent>()

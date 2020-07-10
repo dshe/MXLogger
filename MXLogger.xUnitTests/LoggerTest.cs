@@ -1,12 +1,11 @@
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
-using MXLogger;
 
-namespace MXLoggerXunitTest
+namespace MXLogger.xUnitTests
 {
     public class LoggerFormatTest
     {
@@ -23,11 +22,11 @@ namespace MXLoggerXunitTest
             var factory = serviceProvider.GetService<ILoggerFactory>();
             var logger1 = factory.CreateLogger("category");
             logger1.LogInformation("test");
-            Assert.Equal("test", loggerProvider.LogEntries.Last().Text);
+            Assert.Equal("test", loggerProvider.GetLogEntries().Last().Text);
 
             var logger2 = serviceProvider.GetService<ILogger<LoggerFormatTest>>();
             logger2.LogInformation("test");
-            Assert.Equal("test", loggerProvider.LogEntries.Last().Text);
+            Assert.Equal("test", loggerProvider.GetLogEntries().Last().Text);
         }
 
         [Fact]
@@ -46,7 +45,7 @@ namespace MXLoggerXunitTest
             var factory = new LoggerFactory(new[] { loggerProvider });
             var logger = factory.CreateLogger<LoggerFormatTest>();
             logger.LogInformation("anything");
-            Assert.Equal("MXLoggerXunitTest.LoggerFormatTest", loggerProvider.LogEntries.Last().Category);
+            Assert.Equal("MXLogger.xUnitTests.LoggerFormatTest", loggerProvider.GetLogEntries().Last().Category);
             factory.Dispose();
         }
 
@@ -66,7 +65,7 @@ namespace MXLoggerXunitTest
             var factory = new LoggerFactory(new[] { loggerProvider });
             var logger = factory.CreateLogger();
             logger.LogInformation("anything");
-            Assert.Equal("CallerNameTest", loggerProvider.LogEntries.Last().Category);
+            Assert.Equal("CallerNameTest", loggerProvider.GetLogEntries().Last().Category);
             factory.Dispose();
         }
 

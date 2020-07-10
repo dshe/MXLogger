@@ -1,19 +1,18 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MXLogger;
 
 [assembly: Parallelize(Workers = 0, Scope = ExecutionScope.MethodLevel)]
 
-namespace MXLoggerMSTest
+namespace MXLogger.MSTests
 {
     [TestClass]
-    public class SimpleTest
+    public class SimpleExample
     {
         public TestContext? TestContext { get; set; }
 
         public ILogger Logger;
 
-        public SimpleTest()
+        public SimpleExample()
         {
             var factory = new LoggerFactory().AddMXLogger(s => TestContext!.WriteLine(s), LogLevel.Trace);
             Logger = factory.CreateLogger("CategoryName");

@@ -36,7 +36,8 @@ namespace MXLogger
             return scopes.AsReadOnly();
         }
 
-        public ConcurrentBag<LogInfo> LogEntries { get; } = new ConcurrentBag<LogInfo>();
+        private ConcurrentBag<LogInfo> LogEntries { get; } = new ConcurrentBag<LogInfo>();
+        public List<LogInfo> GetLogEntries() => LogEntries.ToArray().OrderBy(x => x.DateTime).ToList();
 
         public void Write(string text)
         {

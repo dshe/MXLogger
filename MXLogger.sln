@@ -8,14 +8,15 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F66ED9D5-AF1D-4D26-85B7-6055350B274C}"
 	ProjectSection(SolutionItems) = preProject
 		appveyor.yml = appveyor.yml
+		~local\notes.txt = ~local\notes.txt
 		worm64.png = worm64.png
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MXLoggerXunitTest", "MXLoggerXunitTest\MXLoggerXunitTest.csproj", "{92807685-9E15-4387-B543-ADD826C7F58D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MXLogger.MSTests", "MXLogger.MSTests\MXLogger.MSTests.csproj", "{9FCCE6A2-8C48-4FF5-B16F-B7E2FB94FACA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MXLoggerMSTest", "MXLoggerMSTest\MXLoggerMSTest.csproj", "{4D9002E2-1A3D-44B5-A2CE-C6E038488E44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MXLogger.NUnitTests", "MXLogger.NUnitTests\MXLogger.NUnitTests.csproj", "{742E769F-E43D-4222-896F-AD617DC5342D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MXLoggerNUnitTest", "MXLoggerNUnitTest\MXLoggerNUnitTest.csproj", "{80B520D3-8CAF-43D7-909C-F7D43FAF25DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MXLogger.xUnitTests", "MXLogger.xUnitTests\MXLogger.xUnitTests.csproj", "{6A6C4666-ECB1-4C1B-B0E0-F470B91C2BC2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,18 +28,18 @@ Global
 		{528EBFF7-3A82-4CE3-B9CE-1184FAEE2B94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{528EBFF7-3A82-4CE3-B9CE-1184FAEE2B94}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{528EBFF7-3A82-4CE3-B9CE-1184FAEE2B94}.Release|Any CPU.Build.0 = Release|Any CPU
-		{92807685-9E15-4387-B543-ADD826C7F58D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{92807685-9E15-4387-B543-ADD826C7F58D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{92807685-9E15-4387-B543-ADD826C7F58D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{92807685-9E15-4387-B543-ADD826C7F58D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4D9002E2-1A3D-44B5-A2CE-C6E038488E44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4D9002E2-1A3D-44B5-A2CE-C6E038488E44}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4D9002E2-1A3D-44B5-A2CE-C6E038488E44}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4D9002E2-1A3D-44B5-A2CE-C6E038488E44}.Release|Any CPU.Build.0 = Release|Any CPU
-		{80B520D3-8CAF-43D7-909C-F7D43FAF25DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{80B520D3-8CAF-43D7-909C-F7D43FAF25DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{80B520D3-8CAF-43D7-909C-F7D43FAF25DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{80B520D3-8CAF-43D7-909C-F7D43FAF25DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FCCE6A2-8C48-4FF5-B16F-B7E2FB94FACA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FCCE6A2-8C48-4FF5-B16F-B7E2FB94FACA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FCCE6A2-8C48-4FF5-B16F-B7E2FB94FACA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FCCE6A2-8C48-4FF5-B16F-B7E2FB94FACA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{742E769F-E43D-4222-896F-AD617DC5342D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{742E769F-E43D-4222-896F-AD617DC5342D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{742E769F-E43D-4222-896F-AD617DC5342D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{742E769F-E43D-4222-896F-AD617DC5342D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A6C4666-ECB1-4C1B-B0E0-F470B91C2BC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A6C4666-ECB1-4C1B-B0E0-F470B91C2BC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A6C4666-ECB1-4C1B-B0E0-F470B91C2BC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A6C4666-ECB1-4C1B-B0E0-F470B91C2BC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

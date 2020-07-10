@@ -5,6 +5,7 @@ namespace MXLogger
 {
     public class LogInfo
     {
+        public DateTime DateTime { get; }
         public string Category { get; }
         public LogLevel LogLevel { get; }
         public EventId EventId { get; }
@@ -14,6 +15,7 @@ namespace MXLogger
 
         internal LogInfo(string category, LogLevel logLevel, EventId eventId, object? state, Exception? exception, string? text)
         {
+            DateTime = DateTime.UtcNow;
             Category = category;
             LogLevel = logLevel;
             EventId = eventId;
