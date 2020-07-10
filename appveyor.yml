@@ -20,9 +20,9 @@ build:
   verbosity: minimal
   publish_nuget: true
 test_script:
-- ps: dotnet test .\MXLoggerMSTest\MXLoggerMSTest.csproj
+- ps: dotnet test .\MXLogger.MSTests\MXLogger.MSTests.csproj
 - ps: dotnet test .\MXLogger.xUnitTests\MXLogger.xUnitTests.csproj
-- ps: dotnet test .\MXLoggerNUnitTest\MXLoggerNUnitTest.csproj
+- ps: dotnet test .\MXLogger.NUnitTests\MXLogger.NUnitTests.csproj
 nuget:
   account_feed: false
   project_feed: true
