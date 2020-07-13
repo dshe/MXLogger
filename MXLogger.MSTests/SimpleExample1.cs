@@ -14,7 +14,9 @@ namespace MXLogger.MSTests
 
         public SimpleExample()
         {
-            var factory = new LoggerFactory().AddMXLogger(s => TestContext!.WriteLine(s), LogLevel.Trace);
+            var factory = new LoggerFactory()
+                .AddMXLogger(s => TestContext!.WriteLine(s), LogLevel.Trace);
+
             Logger = factory.CreateLogger("CategoryName");
         }
 
