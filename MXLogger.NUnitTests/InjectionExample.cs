@@ -24,7 +24,7 @@ namespace MXLogger.NUnitTests
                 .AddTransient<MyComponent>()
                 .AddLogging(builder => builder.AddMXLogger(TestContext.WriteLine, LogLevel.Trace))
                 .BuildServiceProvider()
-                .GetService<MyComponent>();
+                .GetService<MyComponent>()!;
         }
 
         [Test]

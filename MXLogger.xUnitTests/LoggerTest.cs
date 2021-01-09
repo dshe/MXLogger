@@ -19,7 +19,7 @@ namespace MXLogger.xUnitTests
             var services = new ServiceCollection().AddLogging(builder => builder.AddProvider(loggerProvider));
             var serviceProvider = services.BuildServiceProvider();
 
-            var factory = serviceProvider.GetService<ILoggerFactory>();
+            var factory = serviceProvider.GetService<ILoggerFactory>()!;
             var logger1 = factory.CreateLogger("category");
             logger1.LogInformation("test");
             Assert.Equal("test", loggerProvider.GetLogEntries().Last().Text);
