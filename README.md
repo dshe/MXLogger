@@ -10,7 +10,7 @@
 - dependencies: Microsoft.Extensions.Logging
 
 ### Installation ###
-```shell
+```csharp
 PM> Install-Package MXLogger
 ```
 
