@@ -15,7 +15,6 @@ PM> Install-Package MXLogger
 ```
 
 ### Simple Example (xUnit) ###
-
 ```csharp
 using Microsoft.Extensions.Logging;
 using Xunit;
