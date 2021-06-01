@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections.Concurrent;
-using Microsoft.Extensions.Logging;
 
-namespace MXLogger
+namespace Microsoft.Extensions.Logging
 {
     public class MXLoggerProvider : ILoggerProvider, ISupportExternalScope
     {

@@ -1,7 +1,6 @@
 ﻿using System;
-using Microsoft.Extensions.Logging;
 
-namespace MXLogger
+namespace Microsoft.Extensions.Logging
 {
     public class LogInfo
     {

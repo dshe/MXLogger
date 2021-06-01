@@ -10,7 +10,7 @@ namespace MXLogger.xUnitTests
     public class LogEntryTest
     {
         private readonly Action<string> WriteLine;
-        private LogInfo LastEntry => LoggerProvider.GetLogEntries().LastOrDefault();
+        private LogInfo LastEntry => LoggerProvider.GetLogEntries().Last();
         private readonly MXLoggerProvider LoggerProvider;
         private readonly ILogger Logger;
 
@@ -49,7 +49,7 @@ namespace MXLogger.xUnitTests
 
             var properties = LastEntry.State as IEnumerable<KeyValuePair<string, object>>;
             Assert.NotNull(properties);
-            var property = properties.Single();
+            var property = properties!.Single();
             Assert.Equal("{OriginalFormat}", property.Key);
             Assert.Equal("message", property.Value);
 
@@ -69,7 +69,7 @@ namespace MXLogger.xUnitTests
 
             var properties = LastEntry.State as IEnumerable<KeyValuePair<string, object>>;
             Assert.NotNull(properties);
-            var property = properties.Single();
+            var property = properties!.Single();
             Assert.Equal("{OriginalFormat}", property.Key);
             Assert.Equal("message", property.Value);
 

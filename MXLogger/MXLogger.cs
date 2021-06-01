@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
-using Microsoft.Extensions.Logging;
 
-namespace MXLogger
+namespace Microsoft.Extensions.Logging
 {
     internal class MXLogger : ILogger
     {

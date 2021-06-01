@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using Microsoft.Extensions.Logging;
 
-namespace MXLogger
+namespace Microsoft.Extensions.Logging
 {
     public static class Extensions
     {
