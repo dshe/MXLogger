@@ -19,7 +19,6 @@ PM> Install-Package MXLogger
 using Microsoft.Extensions.Logging;
 using Xunit;
 using Xunit.Abstractions;
-using MXLogger;
 
 public class SimpleTest
 {
@@ -47,7 +46,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
-using MXLogger;
 
 public class MyComponent
 {
