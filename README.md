@@ -2,7 +2,7 @@
 
 ***Minimalist Microsoft.Extensions.Logging Provider***
 - compatible with xUnit, NUnit, MSTest and other test frameworks
-- **NetStandard 2.0** library
+- **.NET Standard 2.0** library
 - customizable formatting
 - supports scopes
 - provides output caching
