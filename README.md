@@ -81,3 +81,35 @@ public class DependencyInjectionTest
 ```csharp
 xUnit output: "Crit	  Namespace.MyComponent	  some message"
 ```
+### Base Class Example (xUnit) ###
+```csharp
+using Microsoft.Extensions.Logging;
+using Xunit.Abstractions;
+
+public abstract class BaseTest
+{
+    protected readonly ILogger Logger;
+
+    public BaseTest(ITestOutputHelper output)
+    {
+        Logger = new LoggerFactory()
+            .AddMXLogger(output.WriteLine)
+            .CreateLogger("Test");
+    }
+}
+```
+```csharp
+using Microsoft.Extensions.Logging;
+using Xunit;
+
+public class Example : BaseTest
+{
+    public Example(ITestOutputHelper output) : base(output) { }
+
+    [Fact]
+    public void Test()
+    {
+        Logger.LogInformation("message");
+    }
+}
+```
