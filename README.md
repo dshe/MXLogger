@@ -74,12 +74,12 @@ public class DependencyInjectionTest
     [Fact]
     public void Test()
     {
-        MyComponent.Logger.LogCritical("some message");
+        MyComponent.Logger.LogCritical("Some message.");
     }
 }
 ```
 ```csharp
-xUnit output: "Crit	  Namespace.MyComponent	  some message"
+xUnit output: "Crit	  Namespace.MyComponent	  Some message."
 ```
 ### Base Class Example (xUnit) ###
 ```csharp
@@ -109,7 +109,7 @@ public class Example : BaseTest
     [Fact]
     public void Test()
     {
-        Logger.LogInformation("message");
+        Logger.LogInformation("Some message.");
     }
 }
 ```
