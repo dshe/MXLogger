@@ -28,18 +28,18 @@ public class SimpleTest
     {
         Logger = new LoggerFactory()
             .AddMXLogger(output.WriteLine)
-            .CreateLogger("CategoryName");
+            .CreateLogger("SimpleTest");
     }
 
     [Fact]
     public void Test()
     {
-        Logger.LogInformation("some message");
+        Logger.LogInformation("Some message.");
     }
 }
 ```
 ```csharp
-xUnit output: "Info	  CategoryName	  some message"
+xUnit output: "Info	  SimpleTest	  Some message."
 ```
 ### Dependency Injection Example (xUnit) ###
 ```csharp
