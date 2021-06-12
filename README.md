@@ -35,6 +35,7 @@ public class SimpleTest
     public void Test()
     {
         Logger.LogInformation("Some message.");
+        ...
     }
 }
 ```
@@ -49,12 +50,15 @@ using Xunit.Abstractions;
 public abstract class BaseTest
 {
     protected readonly ILogger Logger;
+    protected IMyLibrary MyLibrary;
 
     public BaseTest(ITestOutputHelper output)
     {
         Logger = new LoggerFactory()
             .AddMXLogger(output.WriteLine)
             .CreateLogger("Test");
+        
+        MyLibrary = new MyLibrary(Logger);
     }
 }
 ```
@@ -69,7 +73,8 @@ public class Example : BaseTest
     [Fact]
     public void Test()
     {
-        Logger.LogInformation("Some message.");
+        MyLibrary.Run();
+        ...
     }
 }
 ```
@@ -107,6 +112,7 @@ public class DependencyInjectionTest
     public void Test()
     {
         MyComponent.Logger.LogCritical("Some message.");
+        ...
     }
 }
 ```
