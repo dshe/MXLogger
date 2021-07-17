@@ -47,18 +47,37 @@ xUnit output: "Info	  SimpleTest	  Some message."
 using Microsoft.Extensions.Logging;
 using Xunit.Abstractions;
 
+public class MyComponent
+{
+    private readonly ILogger Logger;
+
+    public MyComponent(ILogger<MyComponent> logger)
+    {
+        Logger = logger;
+    }
+
+    public void Test()
+    {
+        Logger.LogInformation("Hello World!");
+    }
+}
+```
+```csharp
+
 public abstract class BaseTest
 {
-    protected readonly ILogger Logger;
-    protected IMyLibrary MyLibrary;
+    protected readonly ILogger<Example> Logger;
+    protected MyComponent MyComponent;
 
     public BaseTest(ITestOutputHelper output)
     {
-        Logger = new LoggerFactory()
-            .AddMXLogger(output.WriteLine)
-            .CreateLogger("Test");
-        
-        MyLibrary = new MyLibrary(Logger);
+        var factory = new LoggerFactory()
+            .AddMXLogger(output.WriteLine);
+
+        Logger = factory.CreateLogger<Example>();
+
+        var myComponentLogger = factory.CreateLogger<MyComponent>();
+        MyComponent = new MyComponent(myComponentLogger);
     }
 }
 ```
@@ -73,8 +92,9 @@ public class Example : BaseTest
     [Fact]
     public void Test()
     {
-        MyLibrary.Run();
-        ...
+        Logger.LogInformation("message");
+
+        MyComponent.Test();
     }
 }
 ```
