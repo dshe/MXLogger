@@ -58,7 +58,7 @@ public class MyComponent
 
     public void Test()
     {
-        Logger.LogInformation("Hello World!");
+        Logger.LogInformation("Some message.");
     }
 }
 ```
@@ -107,7 +107,7 @@ using Xunit.Abstractions;
 
 public class MyComponent
 {
-    public readonly ILogger Logger;
+    private readonly ILogger Logger;
     
     public MyComponent(ILogger<MyComponent> logger)
     {
