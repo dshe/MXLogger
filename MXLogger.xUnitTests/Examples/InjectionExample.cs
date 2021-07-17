@@ -5,33 +5,38 @@ using Xunit.Abstractions;
 
 namespace MXLogger.xUnitTests
 {
-    public class MyComponent
+    public class MyComponent1
     {
-        public readonly ILogger Logger;
+        private readonly ILogger Logger;
 
-        public MyComponent(ILogger<MyComponent> logger)
+        public MyComponent1(ILogger<MyComponent1> logger)
         {
             Logger = logger;
+        }
+
+        public void Test()
+        {
+            Logger.LogCritical("Test!");
         }
     }
 
     public class InjectionExample
     {
-        public readonly MyComponent MyComponent;
+        public readonly MyComponent1 MyComponent1;
 
         public InjectionExample(ITestOutputHelper output)
         {
-            MyComponent = new ServiceCollection()
-                .AddTransient<MyComponent>()
+            MyComponent1 = new ServiceCollection()
+                .AddTransient<MyComponent1>()
                 .AddLogging(builder => builder.AddMXLogger(output.WriteLine, LogLevel.Trace))
                 .BuildServiceProvider()
-                .GetService<MyComponent>()!;
+                .GetService<MyComponent1>()!;
         }
 
         [Fact]
         public void Test()
         {
-            MyComponent.Logger.LogCritical("message");
+            MyComponent1.Test();
         }
     }
 }

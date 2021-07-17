@@ -18,7 +18,7 @@ namespace MXLogger.xUnitTests
         [Fact]
         public void Test()
         {
-            Logger.LogInformation("message");
+            Logger.LogInformation("some message");
         }
     }
 }
