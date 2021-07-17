@@ -113,6 +113,11 @@ public class MyComponent
     {
         Logger = logger;
     }
+    
+    public void Test()
+    {
+        Logger.LogCritical("Some message.");
+    }    
 }
 
 public class DependencyInjectionTest
@@ -131,7 +136,7 @@ public class DependencyInjectionTest
     [Fact]
     public void Test()
     {
-        MyComponent.Logger.LogCritical("Some message.");
+        MyComponent.Test();
         ...
     }
 }
