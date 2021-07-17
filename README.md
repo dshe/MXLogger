@@ -35,11 +35,68 @@ public class SimpleTest
     public void Test()
     {
         Logger.LogInformation("Some message.");
+        ...
     }
 }
 ```
 ```csharp
 xUnit output: "Info	  SimpleTest	  Some message."
+```
+### Base Class Example (xUnit) ###
+```csharp
+using Microsoft.Extensions.Logging;
+using Xunit.Abstractions;
+
+public class MyComponent
+{
+    private readonly ILogger Logger;
+
+    public MyComponent(ILogger<MyComponent> logger)
+    {
+        Logger = logger;
+    }
+
+    public void Test()
+    {
+        Logger.LogInformation("Some message.");
+    }
+}
+```
+```csharp
+
+public abstract class BaseTest
+{
+    protected readonly ILogger<Example> Logger;
+    protected MyComponent MyComponent;
+
+    public BaseTest(ITestOutputHelper output)
+    {
+        var factory = new LoggerFactory()
+            .AddMXLogger(output.WriteLine);
+
+        Logger = factory.CreateLogger<Example>();
+
+        var myComponentLogger = factory.CreateLogger<MyComponent>();
+        MyComponent = new MyComponent(myComponentLogger);
+    }
+}
+```
+```csharp
+using Microsoft.Extensions.Logging;
+using Xunit;
+
+public class Example : BaseTest
+{
+    public Example(ITestOutputHelper output) : base(output) { }
+
+    [Fact]
+    public void Test()
+    {
+        Logger.LogInformation("message");
+
+        MyComponent.Test();
+    }
+}
 ```
 ### Dependency Injection Example (xUnit) ###
 ```csharp
@@ -50,12 +107,17 @@ using Xunit.Abstractions;
 
 public class MyComponent
 {
-    public readonly ILogger Logger;
+    private readonly ILogger Logger;
     
     public MyComponent(ILogger<MyComponent> logger)
     {
         Logger = logger;
     }
+    
+    public void Test()
+    {
+        Logger.LogCritical("Some message.");
+    }    
 }
 
 public class DependencyInjectionTest
@@ -74,42 +136,11 @@ public class DependencyInjectionTest
     [Fact]
     public void Test()
     {
-        MyComponent.Logger.LogCritical("Some message.");
+        MyComponent.Test();
+        ...
     }
 }
 ```
 ```csharp
 xUnit output: "Crit	  Namespace.MyComponent	  Some message."
-```
-### Base Class Example (xUnit) ###
-```csharp
-using Microsoft.Extensions.Logging;
-using Xunit.Abstractions;
-
-public abstract class BaseTest
-{
-    protected readonly ILogger Logger;
-
-    public BaseTest(ITestOutputHelper output)
-    {
-        Logger = new LoggerFactory()
-            .AddMXLogger(output.WriteLine)
-            .CreateLogger("Test");
-    }
-}
-```
-```csharp
-using Microsoft.Extensions.Logging;
-using Xunit;
-
-public class Example : BaseTest
-{
-    public Example(ITestOutputHelper output) : base(output) { }
-
-    [Fact]
-    public void Test()
-    {
-        Logger.LogInformation("Some message.");
-    }
-}
 ```
