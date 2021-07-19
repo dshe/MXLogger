@@ -71,12 +71,12 @@ public abstract class BaseTest
 
     public BaseTest(ITestOutputHelper output)
     {
-        var factory = new LoggerFactory()
+        ILoggerFactory factory = new LoggerFactory()
             .AddMXLogger(output.WriteLine);
 
         Logger = factory.CreateLogger<Example>();
 
-        var myComponentLogger = factory.CreateLogger<MyComponent>();
+        ILogger<MyComponent> myComponentLogger = factory.CreateLogger<MyComponent>();
         MyComponent = new MyComponent(myComponentLogger);
     }
 }
