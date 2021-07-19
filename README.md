@@ -51,14 +51,15 @@ public class MyComponent
 {
     private readonly ILogger Logger;
 
-    public MyComponent(ILogger<MyComponent> logger)
+    public MyComponent(ILogger logger)
     {
         Logger = logger;
     }
 
-    public void Test()
+    public void Run()
     {
         Logger.LogInformation("Some message.");
+        ...
     }
 }
 ```
@@ -76,7 +77,7 @@ public abstract class BaseTest
 
         Logger = factory.CreateLogger<Example>();
 
-        ILogger<MyComponent> myComponentLogger = factory.CreateLogger<MyComponent>();
+        ILogger myComponentLogger = factory.CreateLogger<MyComponent>();
         MyComponent = new MyComponent(myComponentLogger);
     }
 }
@@ -93,8 +94,8 @@ public class Example : BaseTest
     public void Test()
     {
         Logger.LogInformation("message");
-
-        MyComponent.Test();
+        MyComponent.Run();
+        ...
     }
 }
 ```
@@ -114,9 +115,10 @@ public class MyComponent
         Logger = logger;
     }
     
-    public void Test()
+    public void Run()
     {
         Logger.LogCritical("Some message.");
+        ...
     }    
 }
 
@@ -136,7 +138,7 @@ public class DependencyInjectionTest
     [Fact]
     public void Test()
     {
-        MyComponent.Test();
+        MyComponent.Run();
         ...
     }
 }
