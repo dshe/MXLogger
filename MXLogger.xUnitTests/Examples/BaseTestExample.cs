@@ -8,12 +8,12 @@ namespace MXLogger.xUnitTests
     {
         private readonly ILogger Logger;
 
-        public MyComponent2(ILogger<MyComponent2> logger)
+        public MyComponent2(ILogger logger)
         {
             Logger = logger;
         }
 
-        public void Test()
+        public void Run()
         {
             Logger.LogInformation("Hello World!");
         }
@@ -26,12 +26,12 @@ namespace MXLogger.xUnitTests
 
         public BaseTest(ITestOutputHelper output)
         {
-            var factory = new LoggerFactory()
+            ILoggerFactory factory = new LoggerFactory()
                 .AddMXLogger(output.WriteLine);
 
             Logger = factory.CreateLogger<Example>();
 
-            var myComponentLogger = factory.CreateLogger<MyComponent2>();
+            ILogger myComponentLogger = factory.CreateLogger<MyComponent2>();
             MyComponent2 = new MyComponent2(myComponentLogger);
         }
     }
@@ -45,7 +45,7 @@ namespace MXLogger.xUnitTests
         {
             Logger.LogInformation("message");
 
-            MyComponent2.Test();
+            MyComponent2.Run();
         }
     }
 }

@@ -23,17 +23,30 @@ namespace Microsoft.Extensions.Logging
 
         public static string ToShortString(this LogLevel level)
         {
+            return level switch // Note: switch expression will not compile on Appveyor
+            {
+                LogLevel.Trace => "Trace",
+                LogLevel.Debug => "Debug",
+                LogLevel.Information => "Info",
+                LogLevel.Warning => "Warn",
+                LogLevel.Error => "Error",
+                LogLevel.Critical => "Crit",
+                LogLevel.None => "None",
+                _ => throw new Exception("Invalid LogLevel."),
+            };
+            /*
             switch (level) // Note: switch expression will not compile on Appveyor
             {
-                case LogLevel.Trace:       return "Trace";
-                case LogLevel.Debug:       return "Debug";
+                case LogLevel.Trace: return "Trace";
+                case LogLevel.Debug: return "Debug";
                 case LogLevel.Information: return "Info";
-                case LogLevel.Warning:     return "Warn";
-                case LogLevel.Error:       return "Error";
-                case LogLevel.Critical:    return "Crit";
-                case LogLevel.None:        return "None";
+                case LogLevel.Warning: return "Warn";
+                case LogLevel.Error: return "Error";
+                case LogLevel.Critical: return "Crit";
+                case LogLevel.None: return "None";
             }
             throw new Exception("Invalid LogLevel.");
+            */
         }
     }
 }

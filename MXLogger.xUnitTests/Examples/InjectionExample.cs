@@ -14,7 +14,7 @@ namespace MXLogger.xUnitTests
             Logger = logger;
         }
 
-        public void Test()
+        public void Run()
         {
             Logger.LogCritical("Test!");
         }
@@ -36,7 +36,7 @@ namespace MXLogger.xUnitTests
         [Fact]
         public void Test()
         {
-            MyComponent1.Test();
+            MyComponent1.Run();
         }
     }
 }

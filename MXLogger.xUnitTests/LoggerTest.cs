@@ -25,7 +25,7 @@ namespace MXLogger.xUnitTests
             Assert.Equal("test", loggerProvider.GetLogEntries().Last().Text);
 
             var logger2 = serviceProvider.GetService<ILogger<LoggerFormatTest>>();
-            logger2.LogInformation("test");
+            logger2!.LogInformation("test");
             Assert.Equal("test", loggerProvider.GetLogEntries().Last().Text);
         }
 
@@ -35,7 +35,7 @@ namespace MXLogger.xUnitTests
             var services = new ServiceCollection().AddLogging(builder => builder.AddMXLogger(WriteLine));
             var serviceProvider = services.BuildServiceProvider();
             var logger = serviceProvider.GetService<ILogger<LoggerFormatTest>>();
-            logger.LogInformation("test");
+            logger!.LogInformation("test");
         }
 
         [Fact]
