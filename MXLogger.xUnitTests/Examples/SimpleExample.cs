@@ -13,7 +13,7 @@ namespace MXLogger.xUnitTests
             Logger = new LoggerFactory()
                 .AddMXLogger(output.WriteLine, LogLevel.Trace)
                 .CreateLogger("CategoryName");
-        }
+           }
 
         [Fact]
         public void Test()

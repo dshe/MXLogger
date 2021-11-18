@@ -9,18 +9,18 @@ namespace Microsoft.Extensions.Logging
         internal MXLogger(MXLoggerProvider provider, string category) =>
             (Provider, Category) = (provider, category);
 
-        IDisposable ILogger.BeginScope<TState>(TState state)
+        public IDisposable BeginScope<TState>(TState state)
         {
             if (Provider.ScopeProvider == null)
-                throw new ArgumentNullException(nameof(Provider.ScopeProvider));
+                throw new InvalidOperationException(nameof(Provider.ScopeProvider));
             return Provider.ScopeProvider.Push(state);
         }
 
-        bool ILogger.IsEnabled(LogLevel logLevel) =>
-            Convert.ToInt32(logLevel) >= Convert.ToInt32(Provider.LogLevel);
+        public bool IsEnabled(LogLevel logLevel) =>
+            ((int)logLevel) >= ((int)Provider.LogLevel);
 
-        /// ILogger extension methods call this method
-        void ILogger.Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string?> formatter)
+        // ILogger extension methods call this method
+        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string?> formatter)
         {
             if (!((ILogger)this).IsEnabled(logLevel))
                 return;
