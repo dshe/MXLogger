@@ -27,7 +27,7 @@ public class SimpleTest
     public SimpleTest(ITestOutputHelper output)
     {
         Logger = new LoggerFactory()
-            .AddMXLogger(output.WriteLine)
+            .AddMXLogger(output.WriteLine, LogLevel.Debug)
             .CreateLogger("SimpleTest");
     }
 
@@ -73,7 +73,7 @@ public abstract class BaseTest
     public BaseTest(ITestOutputHelper output)
     {
         ILoggerFactory factory = new LoggerFactory()
-            .AddMXLogger(output.WriteLine);
+            .AddMXLogger(output.WriteLine, LogLevel.Debug);
 
         Logger = factory.CreateLogger<Example>();
 
@@ -130,7 +130,7 @@ public class DependencyInjectionTest
     {
         MyComponent = new ServiceCollection()
             .AddTransient<MyComponent>()
-            .AddLogging(builder => builder.AddMXLogger(output.WriteLine))
+            .AddLogging(builder => builder.AddMXLogger(output.WriteLine, LogLevel.Debug))
             .BuildServiceProvider()
             .GetService<MyComponent>();
     }
