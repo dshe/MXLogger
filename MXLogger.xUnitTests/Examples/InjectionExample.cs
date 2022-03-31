@@ -28,7 +28,7 @@ namespace MXLogger.xUnitTests
         {
             MyComponent1 = new ServiceCollection()
                 .AddTransient<MyComponent1>()
-                .AddLogging(builder => builder.AddMXLogger(output.WriteLine, LogLevel.Trace))
+                .AddLogging(builder => builder.AddMXLogger(output.WriteLine, LogLevel.Debug))
                 .BuildServiceProvider()
                 .GetService<MyComponent1>()!;
         }

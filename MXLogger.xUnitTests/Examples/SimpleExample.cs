@@ -11,7 +11,7 @@ namespace MXLogger.xUnitTests
         public SimpleExample(ITestOutputHelper output)
         {
             Logger = new LoggerFactory()
-                .AddMXLogger(output.WriteLine, LogLevel.Trace)
+                .AddMXLogger(output.WriteLine, LogLevel.Debug)
                 .CreateLogger("CategoryName");
            }
 

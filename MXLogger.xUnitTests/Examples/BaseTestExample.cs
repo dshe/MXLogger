@@ -27,7 +27,7 @@ namespace MXLogger.xUnitTests
         public BaseTest(ITestOutputHelper output)
         {
             ILoggerFactory factory = new LoggerFactory()
-                .AddMXLogger(output.WriteLine);
+               .AddMXLogger(output.WriteLine, LogLevel.Debug);
 
             Logger = factory.CreateLogger<Example>();
 
