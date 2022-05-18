@@ -12,13 +12,14 @@ namespace MXLogger.xUnitTests
         {
             Logger = new LoggerFactory()
                 .AddMXLogger(output.WriteLine, LogLevel.Debug)
-                .CreateLogger("CategoryName");
+                .CreateLogger("category name");
            }
 
         [Fact]
         public void Test()
         {
             Logger.LogInformation("some message");
+            /* ... */
         }
     }
 }
