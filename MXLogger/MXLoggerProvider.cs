@@ -54,7 +54,9 @@ namespace Microsoft.Extensions.Logging
             {
                 WriteLine(str);
             }
+#pragma warning disable CA1031
             catch (Exception)
+#pragma warning restore CA1031
             {
                 ;
             }
