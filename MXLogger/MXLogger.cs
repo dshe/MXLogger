@@ -9,9 +9,9 @@ namespace Microsoft.Extensions.Logging
         internal MXLogger(MXLoggerProvider provider, string category) =>
             (Provider, Category) = (provider, category);
 
-        public IDisposable BeginScope<TState>(TState state)
+        public IDisposable BeginScope<TState>(TState state) where TState : notnull
         {
-            if (Provider.ScopeProvider == null)
+            if (Provider.ScopeProvider is null)
                 throw new InvalidOperationException(nameof(Provider.ScopeProvider));
             return Provider.ScopeProvider.Push(state);
         }

@@ -64,7 +64,7 @@ namespace Microsoft.Extensions.Logging
 
         public virtual string? Format(LogInfo logInfo)
         {
-            if (logInfo == null)
+            if (logInfo is null)
                 throw new ArgumentNullException(nameof(logInfo));
 
             StringBuilder sb = new StringBuilder();

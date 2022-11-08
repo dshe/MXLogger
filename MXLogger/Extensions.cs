@@ -20,7 +20,7 @@ namespace Microsoft.Extensions.Logging
 
         public static ILoggerFactory AddMXLogger(this ILoggerFactory factory, Action<string> writeLine, LogLevel logLevel = LogLevel.Trace)
         {
-            if (factory == null)
+            if (factory is null)
                 throw new ArgumentNullException(nameof(factory));
             var provider = new MXLoggerProvider(writeLine, logLevel);
             try
@@ -36,7 +36,7 @@ namespace Microsoft.Extensions.Logging
 
         public static ILogger CreateLogger(this ILoggerFactory factory, [CallerMemberName] string callerName = "")
         {
-            if (factory == null)
+            if (factory is null)
                 throw new ArgumentNullException(nameof(factory));
             return factory.CreateLogger(callerName);
         }
