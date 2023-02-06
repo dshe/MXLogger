@@ -22,25 +22,28 @@ using Xunit.Abstractions;
 
 public class SimpleTest
 {
-    public readonly ILogger Logger;
+    private readonly ILogger Logger;
 
     public SimpleTest(ITestOutputHelper output)
     {
-        Logger = new LoggerFactory()
-            .AddMXLogger(output.WriteLine, LogLevel.Debug)
-            .CreateLogger("SimpleTest");
+            ILoggerFactory factory = LoggerFactory
+                .Create(builder => builder
+                    .AddMXLogger(output.WriteLine)
+                    .SetMinimumLevel(LogLevel.Debug));
+
+            Logger = factory.CreateLogger("category");
     }
 
     [Fact]
     public void Test()
     {
-        Logger.LogInformation("Some message.");
+        Logger.LogInformation("message");
         ...
     }
 }
 ```
 ```csharp
-xUnit output: "Info	  SimpleTest	  Some message."
+xUnit output: "Info	   category    message"
 ```
 ### Base Class Example (xUnit) ###
 ```csharp
