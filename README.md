@@ -122,7 +122,7 @@ public class MyComponent
     
     public void Run()
     {
-        Logger.LogCritical("message.");
+        Logger.LogCritical("message");
         ...
     }    
 }
@@ -139,7 +139,7 @@ public class DependencyInjectionTest
                 .AddMXLogger(output.WriteLine)
                 .SetMinimumLevel(LogLevel.Debug))
             .BuildServiceProvider()
-            .GetService<MyComponent>();
+            .GetRequiredService<MyComponent>();
     }
 
     [Fact]
@@ -151,5 +151,5 @@ public class DependencyInjectionTest
 }
 ```
 ```csharp
-xUnit output: "Crit	  Namespace.MyComponent	  message."
+xUnit output: "Crit	  Namespace.MyComponent	  message"
 ```
