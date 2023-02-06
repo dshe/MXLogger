@@ -26,12 +26,12 @@ public class SimpleTest
 
     public SimpleTest(ITestOutputHelper output)
     {
-            ILoggerFactory factory = LoggerFactory
-                .Create(builder => builder
-                    .AddMXLogger(output.WriteLine)
-                    .SetMinimumLevel(LogLevel.Debug));
+        ILoggerFactory factory = LoggerFactory
+            .Create(builder => builder
+                .AddMXLogger(output.WriteLine)
+                .SetMinimumLevel(LogLevel.Debug));
 
-            Logger = factory.CreateLogger("category");
+        Logger = factory.CreateLogger("category");
     }
 
     [Fact]
@@ -61,7 +61,7 @@ public class MyComponent
 
     public void Run()
     {
-        Logger.LogInformation("Some message.");
+        Logger.LogInformation("message.");
         ...
     }
 }
@@ -75,8 +75,10 @@ public abstract class BaseTest
 
     public BaseTest(ITestOutputHelper output)
     {
-        ILoggerFactory factory = new LoggerFactory()
-            .AddMXLogger(output.WriteLine, LogLevel.Debug);
+        ILoggerFactory factory = LoggerFactory
+            .Create(builder => builder
+                .AddMXLogger(output.WriteLine)
+                .SetMinimumLevel(LogLevel.Debug));
 
         Logger = factory.CreateLogger<Example>();
 
@@ -120,7 +122,7 @@ public class MyComponent
     
     public void Run()
     {
-        Logger.LogCritical("Some message.");
+        Logger.LogCritical("message.");
         ...
     }    
 }
@@ -133,7 +135,9 @@ public class DependencyInjectionTest
     {
         MyComponent = new ServiceCollection()
             .AddTransient<MyComponent>()
-            .AddLogging(builder => builder.AddMXLogger(output.WriteLine, LogLevel.Debug))
+            .AddLogging(builder => builder
+                .AddMXLogger(output.WriteLine)
+                .SetMinimumLevel(LogLevel.Debug))
             .BuildServiceProvider()
             .GetService<MyComponent>();
     }
@@ -147,5 +151,5 @@ public class DependencyInjectionTest
 }
 ```
 ```csharp
-xUnit output: "Crit	  Namespace.MyComponent	  Some message."
+xUnit output: "Crit	  Namespace.MyComponent	  message."
 ```
