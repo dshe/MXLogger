@@ -73,7 +73,7 @@ public abstract class BaseTest
     protected readonly ILogger<Example> Logger;
     protected MyComponent MyComponent;
 
-    public BaseTest(ITestOutputHelper output)
+    protected BaseTest(ITestOutputHelper output)
     {
         ILoggerFactory factory = LoggerFactory
             .Create(builder => builder
@@ -129,7 +129,7 @@ public class MyComponent
 
 public class DependencyInjectionTest
 {
-    public readonly MyComponent MyComponent;
+    private readonly MyComponent MyComponent;
 
     public DependencyInjectionTest(ITestOutputHelper output)
     {
