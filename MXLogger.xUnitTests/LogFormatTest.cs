@@ -14,7 +14,7 @@ namespace MXLogger.xUnitTests
             Write = output.WriteLine;
             LoggerProvider = new MXLoggerProvider(Write);
         }
-        private string? WriteFormat(LogInfo logInfo)
+        private string? WriteFormat(MXLogInfo logInfo)
         {
 
             var str = LoggerProvider.Format(logInfo);
@@ -26,20 +26,20 @@ namespace MXLogger.xUnitTests
         [Fact]
         public void LoggingFormatLogLevel()
         {
-            WriteFormat(new LogInfo("category1", LogLevel.Critical,    new EventId(1, "ename"),       null, null, "text"));
-            WriteFormat(new LogInfo("category2", LogLevel.Debug,       new EventId(42, "ename"),      null, null, "text"));
-            WriteFormat(new LogInfo("category3", LogLevel.Error,       new EventId(421, "ename"),     null, null, "text"));
-            WriteFormat(new LogInfo("category4", LogLevel.Information, new EventId(4262, "ename"),    null, null, "text"));
-            WriteFormat(new LogInfo("category5", LogLevel.None,        new EventId(42123, "ename"),   null, null, "text"));
-            WriteFormat(new LogInfo("category6", LogLevel.Trace,       new EventId(421234, "ename"),  null, null, "text"));
-            WriteFormat(new LogInfo("category7", LogLevel.Warning,     new EventId(4212345, "ename"), null, null, "text"));
+            WriteFormat(new MXLogInfo("category1", LogLevel.Critical,    new EventId(1, "ename"),       null, null, "text"));
+            WriteFormat(new MXLogInfo("category2", LogLevel.Debug,       new EventId(42, "ename"),      null, null, "text"));
+            WriteFormat(new MXLogInfo("category3", LogLevel.Error,       new EventId(421, "ename"),     null, null, "text"));
+            WriteFormat(new MXLogInfo("category4", LogLevel.Information, new EventId(4262, "ename"),    null, null, "text"));
+            WriteFormat(new MXLogInfo("category5", LogLevel.None,        new EventId(42123, "ename"),   null, null, "text"));
+            WriteFormat(new MXLogInfo("category6", LogLevel.Trace,       new EventId(421234, "ename"),  null, null, "text"));
+            WriteFormat(new MXLogInfo("category7", LogLevel.Warning,     new EventId(4212345, "ename"), null, null, "text"));
         }
 
         [Fact]
         public void LoggingFormatTest()
         {
-            var logInfo = new LogInfo("category", 0, new EventId(), null, null, null);
-            Assert.Equal("Trace\t  category\t  ", WriteFormat(logInfo));
+            var logInfo = new MXLogInfo("category", 0, new EventId(), null, null, "text");
+            Assert.Equal("Trace: category\r\ntext\r\n", WriteFormat(logInfo));
         }
 
         [Fact]
@@ -51,7 +51,7 @@ namespace MXLogger.xUnitTests
             }
             catch (Exception exception)
             {
-                WriteFormat(new LogInfo("category", 0, new EventId(), null, exception, "message"));
+                WriteFormat(new MXLogInfo("category", 0, new EventId(), null, exception, "message"));
             }
         }
     }

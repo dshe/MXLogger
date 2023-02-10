@@ -10,7 +10,7 @@ namespace MXLogger.xUnitTests
     public class LogEntryTest
     {
         private readonly Action<string> WriteLine;
-        private LogInfo LastEntry => LoggerProvider.GetLogEntries().Last();
+        private MXLogInfo LastEntry => LoggerProvider.GetLogEntries().Last();
         private readonly MXLoggerProvider LoggerProvider;
         private readonly ILogger Logger;
 
@@ -18,7 +18,7 @@ namespace MXLogger.xUnitTests
         {
             WriteLine = output.WriteLine;
             LoggerProvider = new MXLoggerProvider(WriteLine);
-            var loggerFactory = new LoggerFactory(new[] { LoggerProvider });
+            var loggerFactory = LoggerFactory.Create(builder => builder.AddProvider(LoggerProvider));
             Logger = loggerFactory.CreateLogger("category");
         }
 
@@ -26,7 +26,7 @@ namespace MXLogger.xUnitTests
         public void LoggingLevelTest()
         {
             var loggerProvider = new MXLoggerProvider(WriteLine, LogLevel.Warning);
-            var loggerFactory = new LoggerFactory(new[] { loggerProvider });
+            var loggerFactory = LoggerFactory.Create(builder => builder.AddProvider(loggerProvider));
             var logger = loggerFactory.CreateLogger("category");
 
             logger.LogTrace("trace message");

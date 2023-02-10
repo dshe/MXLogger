@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Xunit;
 using Xunit.Abstractions;
@@ -10,7 +9,7 @@ namespace MXLogger.xUnitTests
     public class MyCustomLoggerProvider : MXLoggerProvider
     {
         public MyCustomLoggerProvider(Action<string> writeLine) : base(writeLine) { }
-        public override string? Format(LogInfo logInfo)
+        public override string? Format(MXLogInfo logInfo)
         {
             // create custom format here
             return "custom: " + logInfo.Text;
@@ -29,7 +28,7 @@ namespace MXLogger.xUnitTests
         public void LoggingFactoryTest()
         {
             var provider = new MyCustomLoggerProvider(WriteLine);
-            var factory = new LoggerFactory(new[] { provider });
+            var factory = LoggerFactory.Create(builder => builder.AddProvider(provider));
             var logger = factory.CreateLogger<CustomLogFormatTest>();
             
             logger.LogInformation("test");

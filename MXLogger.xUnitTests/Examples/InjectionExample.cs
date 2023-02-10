@@ -22,15 +22,17 @@ namespace MXLogger.xUnitTests
 
     public class InjectionExample
     {
-        public readonly MyComponent1 MyComponent1;
+        private readonly MyComponent1 MyComponent1;
 
         public InjectionExample(ITestOutputHelper output)
         {
             MyComponent1 = new ServiceCollection()
                 .AddTransient<MyComponent1>()
-                .AddLogging(builder => builder.AddMXLogger(output.WriteLine, LogLevel.Debug))
+                .AddLogging(builder => builder
+                    .AddMXLogger(output.WriteLine)
+                    .SetMinimumLevel(LogLevel.Debug))
                 .BuildServiceProvider()
-                .GetService<MyComponent1>()!;
+                .GetRequiredService<MyComponent1>()!;
         }
 
         [Fact]

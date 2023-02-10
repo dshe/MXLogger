@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
+using Microsoft.VisualStudio.TestPlatform.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 [assembly: Parallelize(Workers = 0, Scope = ExecutionScope.MethodLevel)]
 
@@ -8,14 +10,24 @@ namespace MXLogger.MSTests
     [TestClass]
     public class SimpleExample
     {
-        public TestContext? TestContext { get; set; }
+        private static Action<string>? WriteLine;
 
-        public ILogger Logger;
+        [ClassInitialize]
+        public static void TestFixtureSetup(TestContext context)
+        {
+            WriteLine = context.WriteLine;
+        }
+
+        private readonly ILogger Logger;
 
         public SimpleExample()
         {
-            var factory = new LoggerFactory()
-                .AddMXLogger(s => TestContext!.WriteLine(s), LogLevel.Trace);
+            Assert.IsNotNull(WriteLine);
+
+            ILoggerFactory factory = LoggerFactory
+                .Create(builder => builder
+                    .AddMXLogger(WriteLine)
+                    .SetMinimumLevel(LogLevel.Trace));
 
             Logger = factory.CreateLogger("CategoryName");
         }
@@ -26,6 +38,4 @@ namespace MXLogger.MSTests
             Logger.LogInformation("message");
         }
     }
-
-
 }

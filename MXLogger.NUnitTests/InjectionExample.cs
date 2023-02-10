@@ -16,15 +16,17 @@ namespace MXLogger.NUnitTests
 
     public class InjectionExample
     {
-        public MyComponent MyComponent;
+        private MyComponent MyComponent;
 
         public InjectionExample()
         {
             MyComponent = new ServiceCollection()
                 .AddTransient<MyComponent>()
-                .AddLogging(builder => builder.AddMXLogger(TestContext.WriteLine, LogLevel.Trace))
+                .AddLogging(builder => builder
+                    .AddMXLogger(TestContext.WriteLine)
+                    .SetMinimumLevel(LogLevel.Trace))
                 .BuildServiceProvider()
-                .GetService<MyComponent>()!;
+                .GetRequiredService<MyComponent>()!;
         }
 
         [Test]

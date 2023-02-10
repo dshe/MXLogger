@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Microsoft.VisualStudio.TestPlatform.Utilities;
 using NUnit.Framework;
 
 [assembly: Parallelizable(ParallelScope.Children)]
@@ -7,11 +8,15 @@ namespace MXLogger.NUnitTests
 {
     public class SimpleExample
     {
-        public ILogger Logger;
+        private ILogger Logger;
 
         public SimpleExample()
         {
-            var factory = new LoggerFactory().AddMXLogger(TestContext.WriteLine, LogLevel.Trace);
+            ILoggerFactory factory = LoggerFactory
+                .Create(builder => builder
+                    .AddMXLogger(TestContext.WriteLine)
+                    .SetMinimumLevel(LogLevel.Trace));
+
             Logger = factory.CreateLogger("CategoryName");
         }
 

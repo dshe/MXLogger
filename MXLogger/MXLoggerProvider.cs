@@ -10,13 +10,16 @@ namespace Microsoft.Extensions.Logging
     {
         public LogLevel LogLevel { get; }
         private readonly Action<string> WriteLine;
-        private readonly ConcurrentDictionary<string, MXLogger> loggers = new ConcurrentDictionary<string, MXLogger>();
+        private readonly ConcurrentDictionary<string, MXLogger> loggerCache = new ConcurrentDictionary<string, MXLogger>();
 
-        public MXLoggerProvider(Action<string> writeLine, LogLevel logLevel = LogLevel.Trace) =>
-            (WriteLine, LogLevel) = (writeLine, logLevel);
+        public MXLoggerProvider(Action<string> writeLine, LogLevel logLevel = LogLevel.Trace)
+        {
+            WriteLine = writeLine;
+            LogLevel = logLevel;
+        }
 
         public ILogger CreateLogger(string categoryName) =>
-            loggers.GetOrAdd(categoryName, category => new MXLogger(this, category));
+            loggerCache.GetOrAdd(categoryName, category => new MXLogger(this, category));
 
         public void SetScopeProvider(IExternalScopeProvider scopeProvider) => ScopeProvider = scopeProvider;
         internal IExternalScopeProvider? ScopeProvider;
@@ -24,6 +27,7 @@ namespace Microsoft.Extensions.Logging
         public IReadOnlyList<object?> GetScopes(object? state)
         {
             var scopes =  new List<object?>();
+
             ScopeProvider?.ForEachScope((value, loggingProps) =>
             {
                 if (value is IEnumerable<KeyValuePair<string, object>> properties)
@@ -31,22 +35,18 @@ namespace Microsoft.Extensions.Logging
                 else
                     scopes.Add(value);
             }, state);
+
             return scopes.AsReadOnly();
         }
 
-        private ConcurrentBag<LogInfo> LogEntries { get; } = new ConcurrentBag<LogInfo>();
-        public IList<LogInfo> GetLogEntries() => LogEntries.ToArray().OrderBy(x => x.DateTime).ToList();
-
-        public void Write(string text)
-        {
-            var logEntry = new LogInfo("", LogLevel.Critical, 0, null, null, text);
-            LogEntries.Add(logEntry);
-        }
+        private ConcurrentBag<MXLogInfo> LogEntries { get; } = new ConcurrentBag<MXLogInfo>();
+        public IList<MXLogInfo> GetLogEntries() => LogEntries.ToArray().OrderBy(x => x.DateTime).ToList();
 
         // called by XUnitLogger.Log(...)
-        internal void Log(LogInfo logEntry)
+        internal void Log(MXLogInfo logEntry)
         {
             LogEntries.Add(logEntry);
+
             string? str = Format(logEntry);
             if (str is null)
                 return;
@@ -62,33 +62,43 @@ namespace Microsoft.Extensions.Logging
             }
         }
 
-        public virtual string? Format(LogInfo logInfo)
+        public virtual string? Format(MXLogInfo logInfo)
         {
             if (logInfo is null)
                 throw new ArgumentNullException(nameof(logInfo));
 
             StringBuilder sb = new StringBuilder();
 
+            int indent = 0;
             IReadOnlyList<object?> scopes = GetScopes(logInfo.State);
             if (scopes.Any())
             {
-                sb.Append(' ', scopes.Count * 5);
+                indent = scopes.Count * 4;
+                sb.Append(' ', indent);
                 object? lastScope = scopes[scopes.Count - 1];
                 if (lastScope is string str && !string.IsNullOrWhiteSpace(str))
-                    sb.Append(str + "\t  ");
+                    sb.Append(str + "  ");
             }
 
-            sb.Append($"{logInfo.LogLevel.ToShortString()}\t  ");
-            sb.Append($"{logInfo.Category}\t  ");
+            sb.Append(logInfo.LogLevel.ToShortString());
+            sb.Append(": ");
+            sb.Append(logInfo.Category);
 
             if (logInfo.EventId.Id != 0)
-                sb.Append($"[{logInfo.EventId.Id}]:{logInfo.EventId.Name}\t  ");
+                sb.Append($"  [{logInfo.EventId.Id}]:{logInfo.EventId.Name}");
+            sb.AppendLine();
 
             if (!string.IsNullOrEmpty(logInfo.Text))
-                sb.Append($"{logInfo.Text}\t  ");
+            {
+                sb.Append(' ', indent);
+                sb.AppendLine(logInfo.Text);
+            }
 
             if (logInfo.Exception != null)
-                sb.Append($"\n{logInfo.Exception}");
+            {
+                sb.Append(' ', indent);
+                sb.AppendLine(logInfo.Exception.ToString());
+            }
 
             return sb.ToString();
         }

@@ -27,14 +27,14 @@ namespace MXLogger.xUnitTests
                 .BuildServiceProvider();
 
             // inject ILogger<T>
-            Component1 component1 = serviceProvider.GetService<Component1>()!;
+            Component1 component1 = serviceProvider.GetRequiredService<Component1>()!;
             component1.Log("test");
-            Assert.Equal("Info\t  MXLogger.xUnitTests.Component1\t  test\t  ", provider.Format(provider.GetLogEntries().Last()));
+            Assert.Equal("Info: MXLogger.xUnitTests.Component1\r\ntest\r\n", provider.Format(provider.GetLogEntries().Last()));
 
             // inject ILoggerFactory
-            Component2 component2 = serviceProvider.GetService<Component2>()!;
+            Component2 component2 = serviceProvider.GetRequiredService<Component2>()!;
             component2.Log("test");
-            Assert.Equal("Info\t  Component2Name\t  test\t  ", provider.Format(provider.GetLogEntries().Last()));
+            Assert.Equal("Info: Component2Name\r\ntest\r\n", provider.Format(provider.GetLogEntries().Last()));
         }
     }
 

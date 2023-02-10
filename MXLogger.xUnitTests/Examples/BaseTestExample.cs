@@ -15,7 +15,8 @@ namespace MXLogger.xUnitTests
 
         public void Run()
         {
-            Logger.LogInformation("Hello World!");
+            Logger.LogInformation("message");
+            /* ... */
         }
     }
 
@@ -24,10 +25,12 @@ namespace MXLogger.xUnitTests
         protected readonly ILogger<Example> Logger;
         protected MyComponent2 MyComponent2;
 
-        public BaseTest(ITestOutputHelper output)
+        protected BaseTest(ITestOutputHelper output)
         {
-            ILoggerFactory factory = new LoggerFactory()
-               .AddMXLogger(output.WriteLine, LogLevel.Debug);
+            ILoggerFactory factory = LoggerFactory
+                .Create(builder => builder
+                    .AddMXLogger(output.WriteLine)
+                    .SetMinimumLevel(LogLevel.Debug));
 
             Logger = factory.CreateLogger<Example>();
 
@@ -46,6 +49,24 @@ namespace MXLogger.xUnitTests
             Logger.LogInformation("message");
 
             MyComponent2.Run();
+        }
+    }
+
+    public class xxx : ILoggerFactory
+    {
+        public void AddProvider(ILoggerProvider provider)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ILogger CreateLogger(string categoryName)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Microsoft.Extensions.Logging
         public static ILoggingBuilder AddMXLogger(this ILoggingBuilder builder, Action<string> writeLine, LogLevel logLevel = LogLevel.Trace)
         {
             var provider = new MXLoggerProvider(writeLine, logLevel);
+
             try
             {
                 return builder.AddProvider(provider);
@@ -18,11 +19,14 @@ namespace Microsoft.Extensions.Logging
             }
         }
 
+        [Obsolete("Please use AddMXLogger(this ILoggingBuilder builder ...) instead.")]
         public static ILoggerFactory AddMXLogger(this ILoggerFactory factory, Action<string> writeLine, LogLevel logLevel = LogLevel.Trace)
         {
             if (factory is null)
                 throw new ArgumentNullException(nameof(factory));
+
             var provider = new MXLoggerProvider(writeLine, logLevel);
+
             try
             {
                 factory.AddProvider(provider);
@@ -38,6 +42,7 @@ namespace Microsoft.Extensions.Logging
         {
             if (factory is null)
                 throw new ArgumentNullException(nameof(factory));
+
             return factory.CreateLogger(callerName);
         }
 
@@ -45,13 +50,13 @@ namespace Microsoft.Extensions.Logging
         {
             return level switch // Note: switch expression will not compile on Appveyor
             {
-                LogLevel.Trace => "Trace",
-                LogLevel.Debug => "Debug",
-                LogLevel.Information => "Info",
-                LogLevel.Warning => "Warn",
-                LogLevel.Error => "Error",
-                LogLevel.Critical => "Crit",
-                LogLevel.None => "None",
+                LogLevel.Trace =>        "Trace",
+                LogLevel.Debug =>        "Debug",
+                LogLevel.Information =>  "Info",
+                LogLevel.Warning =>      "Warn",
+                LogLevel.Error =>        "Error",
+                LogLevel.Critical =>     "Crit",
+                LogLevel.None =>         "None",
                 _ => throw new InvalidOperationException("Invalid LogLevel."),
             };
         }

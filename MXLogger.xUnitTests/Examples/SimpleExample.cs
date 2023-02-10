@@ -6,19 +6,22 @@ namespace MXLogger.xUnitTests
 {
     public class SimpleExample
     {
-        public readonly ILogger Logger;
+        private readonly ILogger Logger;
 
         public SimpleExample(ITestOutputHelper output)
         {
-            Logger = new LoggerFactory()
-                .AddMXLogger(output.WriteLine, LogLevel.Debug)
-                .CreateLogger("category name");
-           }
+            ILoggerFactory factory = LoggerFactory
+                .Create(builder => builder
+                    .AddMXLogger(output.WriteLine)
+                    .SetMinimumLevel(LogLevel.Debug));
+
+            Logger = factory.CreateLogger("category");
+        }
 
         [Fact]
         public void Test()
         {
-            Logger.LogInformation("some message");
+            Logger.LogInformation("message");
             /* ... */
         }
     }

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
+using Microsoft.VisualStudio.TestPlatform.Utilities;
 
 namespace MXLogger.xUnitTests
 {
@@ -19,12 +20,12 @@ namespace MXLogger.xUnitTests
             var services = new ServiceCollection().AddLogging(builder => builder.AddProvider(loggerProvider));
             var serviceProvider = services.BuildServiceProvider();
 
-            var factory = serviceProvider.GetService<ILoggerFactory>()!;
+            var factory = serviceProvider.GetRequiredService<ILoggerFactory>()!;
             var logger1 = factory.CreateLogger("category");
             logger1.LogInformation("test");
             Assert.Equal("test", loggerProvider.GetLogEntries().Last().Text);
 
-            var logger2 = serviceProvider.GetService<ILogger<LoggerFormatTest>>();
+            var logger2 = serviceProvider.GetRequiredService<ILogger<LoggerFormatTest>>();
             logger2!.LogInformation("test");
             Assert.Equal("test", loggerProvider.GetLogEntries().Last().Text);
         }
@@ -32,9 +33,11 @@ namespace MXLogger.xUnitTests
         [Fact]
         public void InjectionWithExtensionTest()
         {
-            var services = new ServiceCollection().AddLogging(builder => builder.AddMXLogger(WriteLine));
+            var services = new ServiceCollection()
+                .AddLogging(builder => builder
+                .AddMXLogger(WriteLine));
             var serviceProvider = services.BuildServiceProvider();
-            var logger = serviceProvider.GetService<ILogger<LoggerFormatTest>>();
+            var logger = serviceProvider.GetRequiredService<ILogger<LoggerFormatTest>>();
             logger!.LogInformation("test");
         }
 
@@ -42,7 +45,7 @@ namespace MXLogger.xUnitTests
         public void LoggingFactoryTest()
         {
             var loggerProvider = new MXLoggerProvider(WriteLine);
-            var factory = new LoggerFactory(new[] { loggerProvider });
+            var factory = LoggerFactory.Create(builder => builder.AddProvider(loggerProvider));
             var logger = factory.CreateLogger<LoggerFormatTest>();
             logger.LogInformation("anything");
             Assert.Equal("MXLogger.xUnitTests.LoggerFormatTest", loggerProvider.GetLogEntries().Last().Category);
@@ -52,7 +55,10 @@ namespace MXLogger.xUnitTests
         [Fact]
         public void LoggingFactoryWithExtensionTest()
         {
-            var factory = new LoggerFactory().AddMXLogger(WriteLine);
+            ILoggerFactory factory = LoggerFactory
+                .Create(builder => builder
+                    .AddMXLogger(WriteLine)
+                    .SetMinimumLevel(LogLevel.Debug));
             var logger = factory.CreateLogger<LoggerFormatTest>();
             logger.LogInformation("anything");
             factory.Dispose();
@@ -62,18 +68,17 @@ namespace MXLogger.xUnitTests
         public void CallerNameTest()
         {
             var loggerProvider = new MXLoggerProvider(WriteLine);
-            var factory = new LoggerFactory(new[] { loggerProvider });
+            using var factory = LoggerFactory.Create(x => x.AddProvider(loggerProvider));
             var logger = factory.CreateLogger();
             logger.LogInformation("anything");
             Assert.Equal("CallerNameTest", loggerProvider.GetLogEntries().Last().Category);
-            factory.Dispose();
         }
 
         [Fact]
         public void TestScopes()
         {
             var loggerProvider = new MXLoggerProvider(WriteLine);
-            var factory = new LoggerFactory(new[] { loggerProvider });
+            var factory = LoggerFactory.Create(builder => builder.AddProvider(loggerProvider));
             var logger = factory.CreateLogger<LoggerFormatTest>();
 
             logger.LogError("outsideLoop");
@@ -87,7 +92,9 @@ namespace MXLogger.xUnitTests
                     {
                         logger.LogError("loop3");
                     }
+                    logger.LogError("loop2");
                 }
+                logger.LogError("loop1");
             }
             factory.Dispose();
         }
