@@ -5,7 +5,6 @@
 - compatible with xUnit, NUnit, MSTest and other test frameworks
 - customizable formatting
 - supports scopes
-- provides output caching
 - supports Microsoft.Extensions.DependencyInjection
 - dependencies: Microsoft.Extensions.Logging
 
@@ -31,19 +30,21 @@ public class SimpleTest
                 .AddMXLogger(output.WriteLine)
                 .SetMinimumLevel(LogLevel.Debug));
 
-        Logger = factory.CreateLogger("category");
+        Logger = factory.CreateLogger("Category");
     }
 
     [Fact]
     public void Test()
     {
-        Logger.LogInformation("message");
+        Logger.LogInformation("Message");
         ...
     }
 }
 ```
+output:
 ```csharp
-xUnit output: "Info	   category    message"
+Info: Category
+Message
 ```
 ### Base Class Example (xUnit) ###
 ```csharp
@@ -61,7 +62,7 @@ public class MyComponent
 
     public void Run()
     {
-        Logger.LogInformation("message.");
+        Logger.LogInformation("Message");
         ...
     }
 }
@@ -98,7 +99,7 @@ public class Example : BaseTest
     [Fact]
     public void Test()
     {
-        Logger.LogInformation("message");
+        Logger.LogInformation("Message");
         MyComponent.Run();
         ...
     }
@@ -111,6 +112,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
 
+namespace MyNamespace:
+
 public class MyComponent
 {
     private readonly ILogger Logger;
@@ -122,7 +125,7 @@ public class MyComponent
     
     public void Run()
     {
-        Logger.LogCritical("message");
+        Logger.LogCritical("Message");
         ...
     }    
 }
@@ -150,6 +153,8 @@ public class DependencyInjectionTest
     }
 }
 ```
+output:
 ```csharp
-xUnit output: "Crit	  Namespace.MyComponent	  message"
+Crit: MyNamespace.MyComponent
+Message
 ```
