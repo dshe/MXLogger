@@ -2,7 +2,7 @@
 
 namespace Microsoft.Extensions.Logging
 {
-    internal class MXLogger : ILogger
+    internal sealed class MXLogger : ILogger
     {
         private readonly MXLoggerProvider Provider;
         private readonly string Category;

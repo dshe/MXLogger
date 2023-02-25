@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using Microsoft.VisualStudio.TestPlatform.Utilities;
 using NUnit.Framework;
 
 [assembly: Parallelizable(ParallelScope.Children)]

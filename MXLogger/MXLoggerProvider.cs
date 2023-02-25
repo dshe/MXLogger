@@ -12,7 +12,12 @@ namespace Microsoft.Extensions.Logging
         private readonly Action<string> WriteLine;
         private readonly ConcurrentDictionary<string, MXLogger> loggerCache = new ConcurrentDictionary<string, MXLogger>();
 
-        public MXLoggerProvider(Action<string> writeLine, LogLevel logLevel = LogLevel.Trace)
+        public MXLoggerProvider(Action<string> writeLine)
+        {
+            WriteLine = writeLine;
+            LogLevel = LogLevel.Trace;
+        }
+        public MXLoggerProvider(Action<string> writeLine, LogLevel logLevel)
         {
             WriteLine = writeLine;
             LogLevel = logLevel;
@@ -39,13 +44,22 @@ namespace Microsoft.Extensions.Logging
             return scopes.AsReadOnly();
         }
 
-        private ConcurrentBag<MXLogInfo> LogEntries { get; } = new ConcurrentBag<MXLogInfo>();
-        public IList<MXLogInfo> GetLogEntries() => LogEntries.ToArray().OrderBy(x => x.DateTime).ToList();
+        private readonly List<MXLogInfo> LogEntries = new List<MXLogInfo>();
+        public IList<MXLogInfo> GetLogEntries()
+        {
+            lock (LogEntries)
+            {
+                return new List<MXLogInfo>(LogEntries);
+            }
+        }
 
         // called by XUnitLogger.Log(...)
         internal void Log(MXLogInfo logEntry)
         {
-            LogEntries.Add(logEntry);
+            lock (LogEntries)
+            {
+                LogEntries.Add(logEntry);
+            }
 
             string? str = Format(logEntry);
             if (str is null)

@@ -23,7 +23,7 @@ namespace MXLogger.xUnitTests
     public abstract class BaseTest
     {
         protected readonly ILogger<Example> Logger;
-        protected MyComponent2 MyComponent2;
+        protected readonly MyComponent2 MyComponent2;
 
         protected BaseTest(ITestOutputHelper output)
         {
@@ -49,24 +49,6 @@ namespace MXLogger.xUnitTests
             Logger.LogInformation("message");
 
             MyComponent2.Run();
-        }
-    }
-
-    public class xxx : ILoggerFactory
-    {
-        public void AddProvider(ILoggerProvider provider)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public ILogger CreateLogger(string categoryName)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Dispose()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

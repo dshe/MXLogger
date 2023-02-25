@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Channels;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -14,15 +11,15 @@ namespace MXLogger.xUnitTests
         private readonly Action<string> WriteLine;
         public LogLevelTests(ITestOutputHelper output) => WriteLine = output.WriteLine;
 
-        private void TestLogger(ILogger logger)
+        private static void TestLogger(ILogger logger)
         {
+            //WriteLine("WriteLine");
+            //WriteLine("WriteLine");
             logger.LogTrace("test trace");
             logger.LogDebug("test debug");
             logger.LogInformation("test information");
             logger.LogWarning("test warning");
             logger.LogError("test error");
-            WriteLine("WriteLine");
-            WriteLine("WriteLine");
             logger.LogCritical("test critical");
             logger.Log(LogLevel.None, "test none");
         }
@@ -35,7 +32,7 @@ namespace MXLogger.xUnitTests
             var factory = LoggerFactory
                 .Create(builder => builder
                     .AddMXLogger(WriteLine)
-                    .SetMinimumLevel(LogLevel.Information));
+                    .SetMinimumLevel(LogLevel.Debug));
 
             var logger1 = factory.CreateLogger("category");
 

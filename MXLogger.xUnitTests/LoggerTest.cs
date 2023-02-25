@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
-using Microsoft.VisualStudio.TestPlatform.Utilities;
 
 namespace MXLogger.xUnitTests
 {
@@ -69,7 +68,7 @@ namespace MXLogger.xUnitTests
         {
             var loggerProvider = new MXLoggerProvider(WriteLine);
             using var factory = LoggerFactory.Create(x => x.AddProvider(loggerProvider));
-            var logger = factory.CreateLogger();
+            var logger = factory.CreateLoggerFromCallerMemberName();
             logger.LogInformation("anything");
             Assert.Equal("CallerNameTest", loggerProvider.GetLogEntries().Last().Category);
         }

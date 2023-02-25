@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Microsoft.Extensions.Logging
 {
-    public class MXLogInfo
+    public sealed class MXLogInfo
     {
         public string Category { get; }
         public LogLevel LogLevel { get; }
@@ -10,7 +11,6 @@ namespace Microsoft.Extensions.Logging
         public object? State { get; }
         public Exception? Exception { get; }
         public string? Text { get; }
-        public DateTime DateTime { get; } = DateTime.UtcNow;
 
         internal MXLogInfo(string category, LogLevel logLevel, EventId eventId, object? state, Exception? exception, string? text)
         {
