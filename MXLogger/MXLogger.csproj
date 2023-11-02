@@ -10,9 +10,9 @@
     <Description>A minimal Microsoft.Extensions.Logging provider for test frameworks such as MSTest, xUnit and NUnit.</Description>
     <Authors>DavidS</Authors>
     <Company>DavidS</Company>
-    <Version>2.0.2</Version>
-    <AssemblyVersion>2.0.2</AssemblyVersion>
-    <FileVersion>2.0.2</FileVersion>
+    <Version>2.0.3</Version>
+    <AssemblyVersion>2.0.3</AssemblyVersion>
+    <FileVersion>2.0.3</FileVersion>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <PackageIcon>worm64.png</PackageIcon>
     <RepositoryUrl>https://github.com/dshe/MXLogger</RepositoryUrl>
