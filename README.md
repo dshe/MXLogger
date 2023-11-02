@@ -1,6 +1,6 @@
 # MXLogger&nbsp;&nbsp;[![Build status](https://ci.appveyor.com/api/projects/status/e51gaj9271kvpwhc?svg=true)](https://ci.appveyor.com/project/dshe/mxlogger) [![NuGet](https://img.shields.io/nuget/vpre/MXLogger.svg)](https://www.nuget.org/packages/MXLogger/) [![NuGet](https://img.shields.io/nuget/dt/MXLogger?color=orange)](https://www.nuget.org/packages/MXLogger/) [![License](https://img.shields.io/badge/license-Apache%202.0-7755BB.svg)](https://opensource.org/licenses/Apache-2.0)
 
-***Minimalist Microsoft.Extensions.Logging Provider***
+***Minimalist Microsoft Extensions Logging Provider***
 - **.NET Standard 2.0** library
 - compatible with xUnit, NUnit, MSTest and other test frameworks
 - customizable formatting
@@ -12,98 +12,53 @@
 ```csharp
 PM> Install-Package MXLogger
 ```
-
 ### Simple Example (xUnit) ###
 ```csharp
 using Microsoft.Extensions.Logging;
 using Xunit;
 using Xunit.Abstractions;
 
-public class SimpleTest
+public abstract class XunitTestBase
 {
-    private readonly ILogger Logger;
+    private readonly ITestOutputHelper Output;
+    protected readonly ILogger Logger;
+    protected void Write(string format, params object[] args) =>
+        Output.WriteLine(string.Format(format, args) + "\r\n");
 
-    public SimpleTest(ITestOutputHelper output)
+    protected XunitTestBase(ITestOutputHelper output, LogLevel logLevel = LogLevel.Debug, string name = "Test")
     {
-        ILoggerFactory factory = LoggerFactory
-            .Create(builder => builder
-                .AddMXLogger(output.WriteLine)
-                .SetMinimumLevel(LogLevel.Debug));
-
-        Logger = factory.CreateLogger("Category");
+        Output = output;
+        Logger = CreateLogger(logLevel, name);
     }
+
+    protected ILogger CreateLogger(LogLevel logLevel, string name)
+    {
+        return LoggerFactory
+            .Create(builder => builder
+                .AddMXLogger(Output.WriteLine)
+                .SetMinimumLevel(logLevel))
+            .CreateLogger(name);
+    }
+}
+
+public class SimpleExample : XunitTestBase
+{
+    public SimpleExample(ITestOutputHelper output) : base(output) { }
 
     [Fact]
     public void Test()
     {
-        Logger.LogInformation("Message");
-        ...
+        Logger.LogInformation("message!");
+        Write("test!");
     }
 }
 ```
 output:
 ```csharp
-Info: Category
-Message
-```
-### Base Class Example (xUnit) ###
-```csharp
-using Microsoft.Extensions.Logging;
-using Xunit.Abstractions;
+Info: Test
+message!
 
-public class MyComponent
-{
-    private readonly ILogger Logger;
-
-    public MyComponent(ILogger logger)
-    {
-        Logger = logger;
-    }
-
-    public void Run()
-    {
-        Logger.LogInformation("Message");
-        ...
-    }
-}
-```
-```csharp
-
-public abstract class BaseTest
-{
-    protected readonly ILogger<Example> Logger;
-    protected MyComponent MyComponent;
-
-    protected BaseTest(ITestOutputHelper output)
-    {
-        ILoggerFactory factory = LoggerFactory
-            .Create(builder => builder
-                .AddMXLogger(output.WriteLine)
-                .SetMinimumLevel(LogLevel.Debug));
-
-        Logger = factory.CreateLogger<Example>();
-
-        ILogger myComponentLogger = factory.CreateLogger<MyComponent>();
-        MyComponent = new MyComponent(myComponentLogger);
-    }
-}
-```
-```csharp
-using Microsoft.Extensions.Logging;
-using Xunit;
-
-public class Example : BaseTest
-{
-    public Example(ITestOutputHelper output) : base(output) { }
-
-    [Fact]
-    public void Test()
-    {
-        Logger.LogInformation("Message");
-        MyComponent.Run();
-        ...
-    }
-}
+test!
 ```
 ### Dependency Injection Example (xUnit) ###
 ```csharp
@@ -111,8 +66,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
-
-namespace MyNamespace:
 
 public class MyComponent
 {
