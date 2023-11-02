@@ -16,8 +16,10 @@ PM> Install-Package MXLogger
 ```csharp
 using Microsoft.Extensions.Logging;
 using Xunit;
-using Xunit.Abstractions;
 
+namespace Xunit.Abstractions;
+
+// This class may be used as the base class for test classes.
 public abstract class XunitTestBase
 {
     private readonly ITestOutputHelper Output;
@@ -40,6 +42,13 @@ public abstract class XunitTestBase
             .CreateLogger(name);
     }
 }
+```
+```csharp
+using Microsoft.Extensions.Logging;
+using Xunit;
+using Xunit.Abstractions;
+
+namespace YourNamespace;
 
 public class SimpleExample : XunitTestBase
 {
