@@ -25,7 +25,7 @@ public abstract class XunitTestBase
     private readonly ITestOutputHelper Output;
     protected readonly ILogger Logger;
     protected void Write(string format, params object[] args) =>
-        Output.WriteLine(string.Format(format, args) + "\r\n");
+        Output.WriteLine(string.Format(format, args);
 
     protected XunitTestBase(ITestOutputHelper output, LogLevel logLevel = LogLevel.Debug, string name = "Test")
     {
