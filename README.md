@@ -33,7 +33,7 @@ public abstract class XunitTestBase
         Output = output;
         LogFactory = LoggerFactory
             .Create(builder => builder
-                .AddMXLogger(Output.WriteLine)
+                .AddMXLogger(output.WriteLine)
                 .SetMinimumLevel(logLevel));
         Logger = LogFactory.CreateLogger(name);
     }
