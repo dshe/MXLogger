@@ -24,7 +24,7 @@ public abstract class XunitTestBase
 {
     private readonly ITestOutputHelper Output;
     protected void Write(string format, params object[] args) =>
-        Output.WriteLine(string.Format(format, args) + "\r\n");
+        Output.WriteLine(string.Format(format, args) + Environment.NewLine);
     protected readonly ILoggerFactory LogFactory;
     protected readonly ILogger Logger;
 
