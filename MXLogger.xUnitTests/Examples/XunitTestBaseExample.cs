@@ -11,8 +11,12 @@ namespace MXLogger.xUnitTests
         [Fact]
         public void Test()
         {
-            Logger.LogInformation("XunitTestBaseExample message");
-            Write("test!");
+            Logger.LogInformation("XunitTestBaseExample message1");
+            Logger.LogInformation("XunitTestBaseExample message2");
+            Write("test3");
+            Write("test4");
+            Logger.LogInformation("XunitTestBaseExample message5");
+            Write("test6");
         }
     }
 }
