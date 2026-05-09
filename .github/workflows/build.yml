@@ -27,4 +27,6 @@ jobs:
       run: dotnet build MXLogger.slnx --configuration Release --no-restore
 
     - name: Run tests
-      run: dotnet test MXLogger.Tests/MXLogger.Tests.csproj --configuration Release --no-build --verbosity normal
+      run: dotnet test MXLogger.MSTests/MXLogger.MSTests.csproj --configuration Release --no-build --verbosity normal
+      run: dotnet test MXLogger.NUnitTests/MXLogger.NUnitTests.csproj --configuration Release --no-build --verbosity normal
+      run: dotnet test MXLogger.xUnitTests/MXLogger.xUnitTests.csproj --configuration Release --no-build --verbosity normal

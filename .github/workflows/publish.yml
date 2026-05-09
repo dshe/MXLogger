@@ -1,11 +1,11 @@
 name: Publish NuGet
 
 on:
-  workflow_dispatch:   # allows manual runs from the Actions tab
+  workflow_dispatch:  # allows manual runs from the Actions tab
 
 jobs:
   build:
-    uses: ./.github/workflows/build.yml   # calls your build workflow
+    uses: ./.github/workflows/build.yml  # calls your build workflow
 
   publish:
     needs: build
