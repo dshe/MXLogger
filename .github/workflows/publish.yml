@@ -9,7 +9,8 @@ jobs:
 
   publish:
     needs: build
-    runs-on: windows-latest  # use Windows runner
+    runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -29,5 +30,5 @@ jobs:
         run: dotnet pack MXLogger/MXLogger.csproj --configuration Release --no-build --output ./artifacts
 
       - name: Publish to NuGet
-        run: dotnet nuget push ./artifacts/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+        run: dotnet nuget push "./artifacts/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
         
