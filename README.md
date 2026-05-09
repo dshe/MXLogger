@@ -1,4 +1,8 @@
-# MXLogger&nbsp;&nbsp;[![Build status](https://ci.appveyor.com/api/projects/status/e51gaj9271kvpwhc?svg=true)](https://ci.appveyor.com/project/dshe/mxlogger) [![NuGet](https://img.shields.io/nuget/vpre/MXLogger.svg)](https://www.nuget.org/packages/MXLogger/) [![NuGet](https://img.shields.io/nuget/dt/MXLogger?color=orange)](https://www.nuget.org/packages/MXLogger/) [![License](https://img.shields.io/badge/license-Apache%202.0-7755BB.svg)](https://opensource.org/licenses/Apache-2.0)
+# MXLogger&nbsp;&nbsp;
+[![Build & Test](https://github.com/dshe/mxlogger/actions/workflows/build.yml/badge.svg)](https://github.com/dshe/mxlogger/actions/workflows/build.yml)
+[![NuGet](https://img.shields.io/nuget/vpre/MXLogger.svg)](https://www.nuget.org/packages/MXLogger/) 
+[![NuGet](https://img.shields.io/nuget/dt/MXLogger?color=orange)](https://www.nuget.org/packages/MXLogger/) 
+[![License](https://img.shields.io/badge/license-Apache%202.0-7755BB.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ***Minimalist Microsoft Extensions Logging Provider***
 - **.NET Standard 2.0** library
