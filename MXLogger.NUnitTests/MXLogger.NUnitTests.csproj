@@ -2,9 +2,10 @@
 
   <PropertyGroup>
 	<TargetFramework>net8.0-windows7.0</TargetFramework>
-    <IsPackable>false</IsPackable>
-    <Nullable>enable</Nullable>
-    <OutputType>Library</OutputType>
+	<OutputType>Library</OutputType>
+	<UseAppHost>false</UseAppHost>
+	<Nullable>enable</Nullable>
+	<IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>

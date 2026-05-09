@@ -2,9 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <IsPackable>false</IsPackable>
+    <OutputType>Library</OutputType>
+	<UseAppHost>false</UseAppHost>
     <Nullable>enable</Nullable>
-    <RootNamespace>MXLogger.MSTests</RootNamespace>
+	<IsPackable>false</IsPackable>
+	<RootNamespace>MXLogger.MSTests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
