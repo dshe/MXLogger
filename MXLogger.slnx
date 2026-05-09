@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/Solution Items/" />
+  <Project Path="MXLogger.MSTests/MXLogger.MSTests.csproj" />
+  <Project Path="MXLogger.NUnitTests/MXLogger.NUnitTests.csproj" />
+  <Project Path="MXLogger.xUnitTests/MXLogger.xUnitTests.csproj" />
+  <Project Path="MXLogger/MXLogger.csproj" />
+</Solution>

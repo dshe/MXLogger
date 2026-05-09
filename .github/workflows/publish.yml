@@ -1,0 +1,26 @@
+name: Publish NuGet
+
+on:
+  workflow_dispatch:   # allows manual runs from the Actions tab
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml   # calls your build workflow
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Pack NuGet package
+        run: dotnet pack MXLogger/MXLogger.csproj --configuration Release -o ./artifacts
+
+      - name: Publish to NuGet
+        run: dotnet nuget push ./artifacts/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
