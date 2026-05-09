@@ -20,10 +20,10 @@ jobs:
           dotnet-version: "10.0.x"
 
       - name: Restore dependencies
-        run: dotnet restore MXLogger.sln
+        run: dotnet restore MXLogger.slnx
       
       - name: Build solution
-        run: dotnet build MXLogger.sln --configuration Release --no-restore
+        run: dotnet build MXLogger.slnx --configuration Release --no-restore
       
       - name: Pack NuGet package
         run: dotnet pack MXLogger/MXLogger.csproj --configuration Release --no-build --output ./artifacts
