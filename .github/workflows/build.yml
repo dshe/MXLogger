@@ -2,8 +2,10 @@ name: .NET Build & Test
 
 on:
   push:
-   branches:
-    - '**'
+    branches:
+      - '**'
+    paths-ignore:
+      - '.github/workflows/release.yml'
   pull_request:
   workflow_dispatch:  # enable manual runs
   workflow_call:  # allows other workflows to call this one  
