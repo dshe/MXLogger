@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest  # use Windows runner
 
     steps:
     - name: Checkout repository
@@ -19,7 +19,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: "8.0.x"
+        dotnet-version: "10.0.x"
 
     - name: Restore dependencies
       run: dotnet restore MXLogger.slnx
@@ -28,4 +28,4 @@ jobs:
       run: dotnet build MXLogger.slnx --configuration Release --no-restore
 
     - name: Run all tests
-      run: dotnet test MXLogger.slnx --configuration Release
+      run: dotnet test MXLogger.slnx --configuration Release --no-build --verbosity normal
