@@ -2,6 +2,7 @@ name: .NET Build & Test
 
 on:
   push:
+   branches:
     - '**'
   pull_request:
   workflow_dispatch:  # enable manual runs
@@ -26,7 +27,5 @@ jobs:
     - name: Build solution
       run: dotnet build MXLogger.slnx --configuration Release --no-restore
 
-    - name: Run tests
-      run: dotnet test MXLogger.MSTests/MXLogger.MSTests.csproj --configuration Release --no-build --verbosity normal
-      run: dotnet test MXLogger.NUnitTests/MXLogger.NUnitTests.csproj --configuration Release --no-build --verbosity normal
-      run: dotnet test MXLogger.xUnitTests/MXLogger.xUnitTests.csproj --configuration Release --no-build --verbosity normal
+    - name: Run all tests
+      run: dotnet test ExchangeTime.sln --configuration Release
