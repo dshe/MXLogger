@@ -14,28 +14,28 @@ on:
 jobs:
   build-and-publish:
     runs-on: windows-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
+    env:
+      PROJECT_NAME: MXLogger
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: "10.0.x"
 
       - name: Restore
-        run: dotnet restore MXLogger.slnx
+        run: dotnet restore ${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj
 
       - name: Build
-        run: dotnet build MXLogger.slnx `
+        run: dotnet build ${{ env.PROJECT_NAME }}.slnx `
           --configuration Release --no-restore
 
       - name: Test
-        run: dotnet test MXLogger.slnx `
+        run: dotnet test ${{ env.PROJECT_NAME }}.slnx `
           --configuration Release --no-build
 
       - name: Pack
-        run: dotnet pack MXLogger/MXLogger.csproj `
+        run: dotnet pack ${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj `
           --configuration Release `
           --no-restore --no-build `
           -o ./artifacts
