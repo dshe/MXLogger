@@ -6,7 +6,7 @@ namespace Microsoft.Extensions.Logging
     {
         public static ILoggingBuilder AddMXLogger(this ILoggingBuilder builder, Action<string> writeLine)
         {
-            var provider = new MXLoggerProvider(writeLine);
+            MXLoggerProvider provider = new MXLoggerProvider(writeLine);
 
             try
             {
@@ -18,6 +18,7 @@ namespace Microsoft.Extensions.Logging
             }
         }
 
+        /*
         [Obsolete("Please use AddMXLogger(ILoggingBuilder,Action<string>) with SetMinimumLevel(ILoggingBuilder,LogLevel) instead.")]
         public static ILoggingBuilder AddMXLogger(this ILoggingBuilder builder, Action<string> writeLine, LogLevel logLevel)
         {
@@ -32,7 +33,9 @@ namespace Microsoft.Extensions.Logging
                 provider.Dispose();
             }
         }
+        */
 
+        /*
         [Obsolete("Please use AddMXLogger(ILoggingBuilder,Action<string>) instead.")]
         public static ILoggerFactory AddMXLogger(this ILoggerFactory factory, Action<string> writeLine, LogLevel logLevel = LogLevel.Trace)
         {
@@ -51,5 +54,6 @@ namespace Microsoft.Extensions.Logging
                 provider.Dispose();
             }
         }
+        */
     }
 }

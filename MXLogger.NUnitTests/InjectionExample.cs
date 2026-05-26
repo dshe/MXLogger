@@ -1,38 +1,34 @@
-﻿using Microsoft.Extensions.Logging;
-using NUnit.Framework;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+namespace MXLogger.NUnitTests;
 
-namespace MXLogger.NUnitTests
+public class MyComponent
 {
-    public class MyComponent
-    {
-        public readonly ILogger Logger;
+    public readonly ILogger Logger;
 
-        public MyComponent(ILogger<MyComponent> logger)
-        {
-            Logger = logger;
-        }
+    public MyComponent(ILogger<MyComponent> logger)
+    {
+        Logger = logger;
+    }
+}
+
+public class InjectionExample
+{
+    private MyComponent MyComponent;
+
+    public InjectionExample()
+    {
+        MyComponent = new ServiceCollection()
+            .AddTransient<MyComponent>()
+            .AddLogging(builder => builder
+                .AddMXLogger(TestContext.WriteLine)
+                .SetMinimumLevel(LogLevel.Trace))
+            .BuildServiceProvider()
+            .GetRequiredService<MyComponent>()!;
     }
 
-    public class InjectionExample
+    [Test]
+    public void Test()
     {
-        private MyComponent MyComponent;
-
-        public InjectionExample()
-        {
-            MyComponent = new ServiceCollection()
-                .AddTransient<MyComponent>()
-                .AddLogging(builder => builder
-                    .AddMXLogger(TestContext.WriteLine)
-                    .SetMinimumLevel(LogLevel.Trace))
-                .BuildServiceProvider()
-                .GetRequiredService<MyComponent>()!;
-        }
-
-        [Test]
-        public void Test()
-        {
-            MyComponent.Logger.LogCritical("message");
-        }
+        MyComponent.Logger.LogCritical("message");
     }
 }

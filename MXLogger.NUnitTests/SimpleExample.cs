@@ -1,28 +1,22 @@
-﻿using Microsoft.Extensions.Logging;
-using NUnit.Framework;
+﻿namespace MXLogger.NUnitTests;
 
-[assembly: Parallelizable(ParallelScope.Children)]
-
-namespace MXLogger.NUnitTests
+public class SimpleExample
 {
-    public class SimpleExample
+    private ILogger Logger;
+
+    public SimpleExample()
     {
-        private ILogger Logger;
+        ILoggerFactory factory = LoggerFactory
+            .Create(builder => builder
+                .AddMXLogger(TestContext.WriteLine)
+                .SetMinimumLevel(LogLevel.Trace));
 
-        public SimpleExample()
-        {
-            ILoggerFactory factory = LoggerFactory
-                .Create(builder => builder
-                    .AddMXLogger(TestContext.WriteLine)
-                    .SetMinimumLevel(LogLevel.Trace));
+        Logger = factory.CreateLogger("CategoryName");
+    }
 
-            Logger = factory.CreateLogger("CategoryName");
-        }
-
-        [Test]
-        public void Test()
-        {
-            Logger.LogInformation("message");
-        }
+    [Test]
+    public void Test()
+    {
+        Logger.LogInformation("message");
     }
 }

@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using System;
-
-namespace Xunit.Abstractions;
+﻿namespace Xunit.Abstractions;
 
 public abstract class XunitTestBase
 {

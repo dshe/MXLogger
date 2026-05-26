@@ -36,7 +36,7 @@ namespace Microsoft.Extensions.Logging
 
             string? text = formatter?.Invoke(state, exception);
 
-            var logEntry = new MXLogInfo(Category, logLevel, eventId, state, exception, text);
+            MXLogInfo logEntry = new MXLogInfo(Category, logLevel, eventId, state, exception, text);
 
             Provider.Log(logEntry);
         }
