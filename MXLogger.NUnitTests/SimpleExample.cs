@@ -2,7 +2,7 @@
 
 public class SimpleExample
 {
-    private ILogger Logger;
+    private ILogger _logger;
 
     public SimpleExample()
     {
@@ -11,12 +11,12 @@ public class SimpleExample
                 .AddMXLogger(TestContext.WriteLine)
                 .SetMinimumLevel(LogLevel.Trace));
 
-        Logger = factory.CreateLogger("CategoryName");
+        _logger = factory.CreateLogger("CategoryName");
     }
 
     [Test]
     public void Test()
     {
-        Logger.LogInformation("message");
+        _logger.LogInformation("message");
     }
 }

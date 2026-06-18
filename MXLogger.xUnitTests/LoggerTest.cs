@@ -1,24 +1,24 @@
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 namespace MXLogger.xUnitTests;
 
 public class LoggerFormatTest
 {
-    private readonly Action<string> WriteLine;
-    public LoggerFormatTest(ITestOutputHelper output) => WriteLine = output.WriteLine;
+    private readonly Action<string> _writeLine;
+    public LoggerFormatTest(ITestOutputHelper output) => _writeLine = output.WriteLine;
 
     [Fact]
     public void InjectionTest()
     {
-        var loggerProvider = new MXLoggerProvider(WriteLine);
-        var services = new ServiceCollection().AddLogging(builder => builder.AddProvider(loggerProvider));
-        var serviceProvider = services.BuildServiceProvider();
+        MXLoggerProvider loggerProvider = new(_writeLine);
+        IServiceCollection services = new ServiceCollection().AddLogging(builder => builder.AddProvider(loggerProvider));
+        ServiceProvider serviceProvider = services.BuildServiceProvider();
 
-        var factory = serviceProvider.GetRequiredService<ILoggerFactory>()!;
-        var logger1 = factory.CreateLogger("category");
+        ILoggerFactory factory = serviceProvider.GetRequiredService<ILoggerFactory>()!;
+        ILogger logger1 = factory.CreateLogger("category");
         logger1.LogInformation("test");
         Assert.Equal("test", loggerProvider.GetLogEntries().Last().Text);
 
-        var logger2 = serviceProvider.GetRequiredService<ILogger<LoggerFormatTest>>();
+        ILogger<LoggerFormatTest> logger2 = serviceProvider.GetRequiredService<ILogger<LoggerFormatTest>>();
         logger2!.LogInformation("test");
         Assert.Equal("test", loggerProvider.GetLogEntries().Last().Text);
     }
@@ -26,20 +26,20 @@ public class LoggerFormatTest
     [Fact]
     public void InjectionWithExtensionTest()
     {
-        var services = new ServiceCollection()
+        IServiceCollection services = new ServiceCollection()
             .AddLogging(builder => builder
-            .AddMXLogger(WriteLine));
-        var serviceProvider = services.BuildServiceProvider();
-        var logger = serviceProvider.GetRequiredService<ILogger<LoggerFormatTest>>();
+            .AddMXLogger(_writeLine));
+        ServiceProvider serviceProvider = services.BuildServiceProvider();
+        ILogger<LoggerFormatTest> logger = serviceProvider.GetRequiredService<ILogger<LoggerFormatTest>>();
         logger!.LogInformation("test");
     }
 
     [Fact]
     public void LoggingFactoryTest()
     {
-        var loggerProvider = new MXLoggerProvider(WriteLine);
-        var factory = LoggerFactory.Create(builder => builder.AddProvider(loggerProvider));
-        var logger = factory.CreateLogger<LoggerFormatTest>();
+        MXLoggerProvider loggerProvider = new(_writeLine);
+        ILoggerFactory factory = LoggerFactory.Create(builder => builder.AddProvider(loggerProvider));
+        ILogger<LoggerFormatTest> logger = factory.CreateLogger<LoggerFormatTest>();
         logger.LogInformation("anything");
         Assert.Equal("MXLogger.xUnitTests.LoggerFormatTest", loggerProvider.GetLogEntries().Last().Category);
         factory.Dispose();
@@ -50,9 +50,9 @@ public class LoggerFormatTest
     {
         ILoggerFactory factory = LoggerFactory
             .Create(builder => builder
-                .AddMXLogger(WriteLine)
+                .AddMXLogger(_writeLine)
                 .SetMinimumLevel(LogLevel.Debug));
-        var logger = factory.CreateLogger<LoggerFormatTest>();
+        ILogger<LoggerFormatTest> logger = factory.CreateLogger<LoggerFormatTest>();
         logger.LogInformation("anything");
         factory.Dispose();
     }
@@ -60,9 +60,9 @@ public class LoggerFormatTest
     [Fact]
     public void CallerNameTest()
     {
-        var loggerProvider = new MXLoggerProvider(WriteLine);
-        using var factory = LoggerFactory.Create(x => x.AddProvider(loggerProvider));
-        var logger = factory.CreateLoggerFromCallerMemberName();
+        MXLoggerProvider loggerProvider = new(_writeLine);
+        using ILoggerFactory factory = LoggerFactory.Create(x => x.AddProvider(loggerProvider));
+        ILogger logger = factory.CreateLoggerFromCallerMemberName();
         logger.LogInformation("anything");
         Assert.Equal("CallerNameTest", loggerProvider.GetLogEntries().Last().Category);
     }
@@ -70,9 +70,9 @@ public class LoggerFormatTest
     [Fact]
     public void TestScopes()
     {
-        var loggerProvider = new MXLoggerProvider(WriteLine);
-        var factory = LoggerFactory.Create(builder => builder.AddProvider(loggerProvider));
-        var logger = factory.CreateLogger<LoggerFormatTest>();
+        MXLoggerProvider loggerProvider = new(_writeLine);
+        ILoggerFactory factory = LoggerFactory.Create(builder => builder.AddProvider(loggerProvider));
+        ILogger<LoggerFormatTest> logger = factory.CreateLogger<LoggerFormatTest>();
 
         logger.LogError("outsideLoop");
         using (logger.BeginScope("scope1"))

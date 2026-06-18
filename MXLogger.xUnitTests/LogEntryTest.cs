@@ -2,25 +2,25 @@
 
 public class LogEntryTest
 {
-    private readonly Action<string> WriteLine;
-    private MXLogInfo LastEntry => LoggerProvider.GetLogEntries().Last();
-    private readonly MXLoggerProvider LoggerProvider;
-    private readonly ILogger Logger;
+    private readonly Action<string> _writeLine;
+    private MXLogInfo LastEntry => _loggerProvider.GetLogEntries().Last();
+    private readonly MXLoggerProvider _loggerProvider;
+    private readonly ILogger _logger;
 
     public LogEntryTest(ITestOutputHelper output)
     {
-        WriteLine = output.WriteLine;
-        LoggerProvider = new MXLoggerProvider(WriteLine);
-        var loggerFactory = LoggerFactory.Create(builder => builder.AddProvider(LoggerProvider));
-        Logger = loggerFactory.CreateLogger("category");
+        _writeLine = output.WriteLine;
+        _loggerProvider = new MXLoggerProvider(_writeLine);
+        ILoggerFactory loggerFactory = LoggerFactory.Create(builder => builder.AddProvider(_loggerProvider));
+        _logger = loggerFactory.CreateLogger("category");
     }
 
     [Fact]
     public void LoggingLevelTest()
     {
-        var loggerProvider = new MXLoggerProvider(WriteLine, LogLevel.Warning);
-        var loggerFactory = LoggerFactory.Create(builder => builder.AddProvider(loggerProvider));
-        var logger = loggerFactory.CreateLogger("category");
+        MXLoggerProvider loggerProvider = new(_writeLine, LogLevel.Warning);
+        ILoggerFactory loggerFactory = LoggerFactory.Create(builder => builder.AddProvider(loggerProvider));
+        ILogger logger = loggerFactory.CreateLogger("category");
 
         logger.LogTrace("trace message");
         logger.LogDebug("debug message");
@@ -34,13 +34,13 @@ public class LogEntryTest
     [Fact]
     public void LoggingInfoTest()
     {
-        Logger.LogCritical("message");
+        _logger.LogCritical("message");
 
         Assert.Equal("category", LastEntry.Category);
         Assert.Equal(LogLevel.Critical, LastEntry.LogLevel);
         Assert.Equal(0, LastEntry.EventId.Id);
 
-        var properties = LastEntry.State as IEnumerable<KeyValuePair<string, object>>;
+        IEnumerable<KeyValuePair<string, object>>? properties = LastEntry.State as IEnumerable<KeyValuePair<string, object>>;
         Assert.NotNull(properties);
         var property = properties!.Single();
         Assert.Equal("{OriginalFormat}", property.Key);
@@ -53,8 +53,8 @@ public class LogEntryTest
     [Fact]
     public void LoggingExceptionTest()
     {
-        var exception = new Exception("exception message");
-        Logger.LogInformation(exception, "message");
+        Exception exception = new Exception("exception message");
+        _logger.LogInformation(exception, "message");
 
         Assert.Equal("category", LastEntry.Category);
         Assert.Equal(LogLevel.Information, LastEntry.LogLevel);

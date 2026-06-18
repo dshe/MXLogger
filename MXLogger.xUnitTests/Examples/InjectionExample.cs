@@ -3,26 +3,26 @@ namespace MXLogger.xUnitTests;
 
 public class MyComponent1
 {
-    private readonly ILogger Logger;
+    private readonly ILogger _logger;
 
     public MyComponent1(ILogger<MyComponent1> logger)
     {
-        Logger = logger;
+        _logger = logger;
     }
 
     public void Run()
     {
-        Logger.LogCritical("Test!");
+        _logger.LogCritical("Test!");
     }
 }
 
 public class InjectionExample
 {
-    private readonly MyComponent1 MyComponent1;
+    private readonly MyComponent1 _myComponent1;
 
     public InjectionExample(ITestOutputHelper output)
     {
-        MyComponent1 = new ServiceCollection()
+        _myComponent1 = new ServiceCollection()
             .AddTransient<MyComponent1>()
             .AddLogging(builder => builder
                 .AddMXLogger(output.WriteLine)
@@ -34,6 +34,6 @@ public class InjectionExample
     [Fact]
     public void Test()
     {
-        MyComponent1.Run();
+        _myComponent1.Run();
     }
 }

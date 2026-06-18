@@ -4,20 +4,20 @@ namespace Microsoft.Extensions.Logging
 {
     internal sealed class MXLogger : ILogger
     {
-        private readonly MXLoggerProvider Provider;
-        private readonly string Category;
+        private readonly MXLoggerProvider _provider;
+        private readonly string _category;
         internal MXLogger(MXLoggerProvider provider, string category)
         {
-            Provider = provider;
-            Category = category;
+            _provider = provider;
+            _category = category;
         }
 
         public IDisposable? BeginScope<TState>(TState state) where TState : notnull
         {
-            if (Provider.ScopeProvider is null)
-                throw new InvalidOperationException(nameof(Provider.ScopeProvider));
+            if (_provider.ScopeProvider is null)
+                throw new InvalidOperationException(nameof(_provider.ScopeProvider));
 
-            return Provider.ScopeProvider.Push(state);
+            return _provider.ScopeProvider.Push(state);
         }
 
         public bool IsEnabled(LogLevel logLevel)
@@ -25,7 +25,7 @@ namespace Microsoft.Extensions.Logging
             if (logLevel == LogLevel.None)
                 return false;
 
-            return logLevel >= Provider.LogLevel;
+            return logLevel >= _provider.LogLevel;
         }
 
         // ILogger extension methods call this method
@@ -36,9 +36,9 @@ namespace Microsoft.Extensions.Logging
 
             string? text = formatter?.Invoke(state, exception);
 
-            MXLogInfo logEntry = new MXLogInfo(Category, logLevel, eventId, state, exception, text);
+            MXLogInfo logEntry = new MXLogInfo(_category, logLevel, eventId, state, exception, text);
 
-            Provider.Log(logEntry);
+            _provider.Log(logEntry);
         }
     }
 }

@@ -2,16 +2,16 @@
 
 public class MyComponent2
 {
-    private readonly ILogger Logger;
+    private readonly ILogger _logger;
 
     public MyComponent2(ILogger logger)
     {
-        Logger = logger;
+        _logger = logger;
     }
 
     public void Run()
     {
-        Logger.LogInformation("message");
+        _logger.LogInformation("message");
         /* ... */
     }
 }

@@ -3,18 +3,18 @@ namespace MXLogger.xUnitTests;
 
 public class InjectionTests
 {
-    private readonly Action<string> WriteLine;
+    private readonly Action<string> _writeLine;
     public InjectionTests(ITestOutputHelper output)
     {
-        WriteLine = output.WriteLine;
+        _writeLine = output.WriteLine;
     }
 
     [Fact]
     public void Test()
     {
-        var provider = new MXLoggerProvider(WriteLine);
+        MXLoggerProvider provider = new MXLoggerProvider(_writeLine);
 
-        var serviceProvider = new ServiceCollection()
+        ServiceProvider serviceProvider = new ServiceCollection()
             .AddLogging(builder => builder.AddProvider(provider))
             .AddTransient<Component1>()
             .AddTransient<Component2>()
@@ -34,30 +34,30 @@ public class InjectionTests
 
 public class Component1
 {
-    private readonly ILogger Logger;
+    private readonly ILogger _logger;
 
     public Component1(ILogger<Component1> logger)
     {
-        Logger = logger;
+        _logger = logger;
     }
 
     public void Log(string s)
     {
-        Logger.LogInformation(s);
+        _logger.LogInformation(s);
     }
  }
 
 public class Component2
 {
-    private readonly ILogger Logger;
+    private readonly ILogger _logger;
 
     public Component2(ILoggerFactory loggerFactory)
     {
-        Logger = loggerFactory.CreateLogger("Component2Name");
+        _logger = loggerFactory.CreateLogger("Component2Name");
     }
 
     public void Log(string s)
     {
-        Logger.LogInformation(s);
+        _logger.LogInformation(s);
     }
 }

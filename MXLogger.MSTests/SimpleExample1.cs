@@ -3,31 +3,31 @@
 [TestClass]
 public class SimpleExample
 {
-    private static Action<string>? WriteLine;
+    private static Action<string>? _writeLine;
 
     [ClassInitialize]
     public static void TestFixtureSetup(TestContext context)
     {
-        WriteLine = context.WriteLine;
+        _writeLine = context.WriteLine;
     }
 
-    private readonly ILogger Logger;
+    private readonly ILogger _logger;
 
     public SimpleExample()
     {
-        Assert.IsNotNull(WriteLine);
+        Assert.IsNotNull(_writeLine);
 
         ILoggerFactory factory = LoggerFactory
             .Create(builder => builder
-                .AddMXLogger(WriteLine)
+                .AddMXLogger(_writeLine)
                 .SetMinimumLevel(LogLevel.Trace));
 
-        Logger = factory.CreateLogger("CategoryName");
+        _logger = factory.CreateLogger("CategoryName");
     }
 
     [TestMethod]
     public void Test()
     {
-        Logger.LogInformation("message");
+        _logger.LogInformation("message");
     }
 }

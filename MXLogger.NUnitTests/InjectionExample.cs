@@ -13,11 +13,11 @@ public class MyComponent
 
 public class InjectionExample
 {
-    private MyComponent MyComponent;
+    private MyComponent _myComponent;
 
     public InjectionExample()
     {
-        MyComponent = new ServiceCollection()
+        _myComponent = new ServiceCollection()
             .AddTransient<MyComponent>()
             .AddLogging(builder => builder
                 .AddMXLogger(TestContext.WriteLine)
@@ -29,6 +29,6 @@ public class InjectionExample
     [Test]
     public void Test()
     {
-        MyComponent.Logger.LogCritical("message");
+        _myComponent.Logger.LogCritical("message");
     }
 }

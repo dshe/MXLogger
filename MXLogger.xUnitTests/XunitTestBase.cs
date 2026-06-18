@@ -2,15 +2,15 @@
 
 public abstract class XunitTestBase
 {
-    private readonly ITestOutputHelper Output;
+    private readonly ITestOutputHelper _output;
     protected readonly ILoggerFactory LogFactory;
     protected readonly ILogger Logger;
     protected void Write(string format, params object[] args) =>
-        Output.WriteLine(string.Format(format, args) + Environment.NewLine);
+        _output.WriteLine(string.Format(format, args) + Environment.NewLine);
 
     protected XunitTestBase(ITestOutputHelper output, LogLevel logLevel = LogLevel.Debug, string name = "Test")
     {
-        Output = output;
+        _output = output;
         LogFactory = LoggerFactory.Create(builder => builder
             .AddMXLogger(output.WriteLine)
             .SetMinimumLevel(logLevel));

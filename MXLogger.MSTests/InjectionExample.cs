@@ -14,12 +14,12 @@ public class MyComponent
 [TestClass]
 public class InjectionExample
 {
-    private static Action<string>? WriteLine;
+    private static Action<string>? _writeLine;
 
     [ClassInitialize]
     public static void TestFixtureSetup(TestContext context)
     {
-        WriteLine = context.WriteLine;
+        _writeLine = context.WriteLine;
     }
 
     public MyComponent MyComponent { get; }
@@ -29,7 +29,7 @@ public class InjectionExample
         MyComponent = new ServiceCollection()
             .AddTransient<MyComponent>()
             .AddLogging(builder => builder
-                .AddMXLogger(WriteLine!)
+                .AddMXLogger(_writeLine!)
                 .SetMinimumLevel(LogLevel.Trace))
             .BuildServiceProvider()
             .GetRequiredService<MyComponent>();

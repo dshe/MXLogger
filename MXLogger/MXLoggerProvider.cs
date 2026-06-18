@@ -9,22 +9,22 @@ namespace Microsoft.Extensions.Logging
     public class MXLoggerProvider : ILoggerProvider, ISupportExternalScope
     {
         public LogLevel LogLevel { get; }
-        private readonly Action<string> WriteLine;
-        private readonly ConcurrentDictionary<string, MXLogger> loggerCache = new ConcurrentDictionary<string, MXLogger>();
+        private readonly Action<string> _writeLine;
+        private readonly ConcurrentDictionary<string, MXLogger> _loggerCache = new ConcurrentDictionary<string, MXLogger>();
 
         public MXLoggerProvider(Action<string> writeLine)
         {
-            WriteLine = writeLine;
+            _writeLine = writeLine;
             LogLevel = LogLevel.Trace;
         }
         public MXLoggerProvider(Action<string> writeLine, LogLevel logLevel)
         {
-            WriteLine = writeLine;
+            _writeLine = writeLine;
             LogLevel = logLevel;
         }
 
         public ILogger CreateLogger(string categoryName) =>
-            loggerCache.GetOrAdd(categoryName, category => new MXLogger(this, category));
+            _loggerCache.GetOrAdd(categoryName, category => new MXLogger(this, category));
 
         public void SetScopeProvider(IExternalScopeProvider scopeProvider) => ScopeProvider = scopeProvider;
         internal IExternalScopeProvider? ScopeProvider;
@@ -44,21 +44,21 @@ namespace Microsoft.Extensions.Logging
             return scopes.AsReadOnly();
         }
 
-        private readonly List<MXLogInfo> LogEntries = new List<MXLogInfo>();
+        private readonly List<MXLogInfo> _logEntries = new List<MXLogInfo>();
         public IList<MXLogInfo> GetLogEntries()
         {
-            lock (LogEntries)
+            lock (_logEntries)
             {
-                return new List<MXLogInfo>(LogEntries);
+                return new List<MXLogInfo>(_logEntries);
             }
         }
 
         // called by XUnitLogger.Log(...)
         internal void Log(MXLogInfo logEntry)
         {
-            lock (LogEntries)
+            lock (_logEntries)
             {
-                LogEntries.Add(logEntry);
+                _logEntries.Add(logEntry);
             }
 
             string? str = Format(logEntry);
@@ -66,7 +66,7 @@ namespace Microsoft.Extensions.Logging
                 return;
             try
             {
-                WriteLine(str);
+                _writeLine(str);
             }
             catch (Exception)
             {

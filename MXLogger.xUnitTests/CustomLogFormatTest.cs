@@ -12,18 +12,18 @@ public class MyCustomLoggerProvider : MXLoggerProvider
 
 public class CustomLogFormatTest
 {
-    readonly Action<string> WriteLine;
+    private readonly Action<string> _writeLine;
     public CustomLogFormatTest(ITestOutputHelper output)
     {
-        WriteLine = output.WriteLine;
+        _writeLine = output.WriteLine;
     }
 
     [Fact]
     public void LoggingFactoryTest()
     {
-        var provider = new MyCustomLoggerProvider(WriteLine);
-        var factory = LoggerFactory.Create(builder => builder.AddProvider(provider));
-        var logger = factory.CreateLogger<CustomLogFormatTest>();
+        MyCustomLoggerProvider provider = new(_writeLine);
+        ILoggerFactory factory = LoggerFactory.Create(builder => builder.AddProvider(provider));
+        ILogger<CustomLogFormatTest> logger = factory.CreateLogger<CustomLogFormatTest>();
         
         logger.LogInformation("test");
 

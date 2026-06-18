@@ -2,19 +2,19 @@
 
 public class LogFormatTest
 {
-    private readonly Action<string> Write;
-    private readonly MXLoggerProvider LoggerProvider;
+    private readonly Action<string> _write;
+    private readonly MXLoggerProvider _loggerProvider;
     public LogFormatTest(ITestOutputHelper output)
     {
-        Write = output.WriteLine;
-        LoggerProvider = new MXLoggerProvider(Write);
+        _write = output.WriteLine;
+        _loggerProvider = new MXLoggerProvider(_write);
     }
     private string? WriteFormat(MXLogInfo logInfo)
     {
 
-        var str = LoggerProvider.Format(logInfo);
+        var str = _loggerProvider.Format(logInfo);
         if (str != null)
-            Write(str);
+            _write(str);
         return str;
     }
 

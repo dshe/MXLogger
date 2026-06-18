@@ -2,8 +2,8 @@
 
 public class LogLevelTests
 {
-    private readonly Action<string> WriteLine;
-    public LogLevelTests(ITestOutputHelper output) => WriteLine = output.WriteLine;
+    private readonly Action<string> _writeLine;
+    public LogLevelTests(ITestOutputHelper output) => _writeLine = output.WriteLine;
 
     private static void TestLogger(ILogger logger)
     {
@@ -23,12 +23,12 @@ public class LogLevelTests
     {
         List<string> strings = new();
 
-        var factory = LoggerFactory
+        ILoggerFactory factory = LoggerFactory
             .Create(builder => builder
-                .AddMXLogger(WriteLine)
+                .AddMXLogger(_writeLine)
                 .SetMinimumLevel(LogLevel.Debug));
 
-        var logger1 = factory.CreateLogger("category");
+        ILogger logger1 = factory.CreateLogger("category");
 
         TestLogger(logger1);
     }
