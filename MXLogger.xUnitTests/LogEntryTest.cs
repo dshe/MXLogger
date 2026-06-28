@@ -18,8 +18,13 @@ public class LogEntryTest
     [Fact]
     public void LoggingLevelTest()
     {
-        MXLoggerProvider loggerProvider = new(_writeLine, LogLevel.Warning);
-        ILoggerFactory loggerFactory = LoggerFactory.Create(builder => builder.AddProvider(loggerProvider));
+        MXLoggerProvider loggerProvider = new(_writeLine, MXLogFormatType.SingleLine);
+        ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
+        {
+            builder.AddProvider(loggerProvider);
+            builder.SetMinimumLevel(LogLevel.Warning);
+        });
+
         ILogger logger = loggerFactory.CreateLogger("category");
 
         logger.LogTrace("trace message");

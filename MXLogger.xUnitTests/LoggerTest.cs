@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Data;
+using Microsoft.Extensions.DependencyInjection;
 namespace MXLogger.xUnitTests;
 
 public class LoggerFormatTest
@@ -28,7 +29,8 @@ public class LoggerFormatTest
     {
         IServiceCollection services = new ServiceCollection()
             .AddLogging(builder => builder
-            .AddMXLogger(_writeLine));
+            .AddMXLogger(_writeLine)
+            .SetMinimumLevel(LogLevel.Debug));
         ServiceProvider serviceProvider = services.BuildServiceProvider();
         ILogger<LoggerFormatTest> logger = serviceProvider.GetRequiredService<ILogger<LoggerFormatTest>>();
         logger!.LogInformation("test");
