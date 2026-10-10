@@ -1,5 +1,4 @@
-﻿using System.Data;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 namespace MXLogger.xUnitTests;
 
 public class LoggerFormatTest
