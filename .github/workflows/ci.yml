@@ -11,6 +11,10 @@ on:
         required: false
         default: 'false'
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   build-and-publish:
     runs-on: windows-latest
@@ -43,10 +47,13 @@ jobs:
       - name: List artifacts
         run: ls ./artifacts
 
+      - name: NuGet login
+        if: github.event.inputs.publish == 'true'
+        uses: NuGet/login@v1        
+
       - name: Publish to NuGet
         if: github.event.inputs.publish == 'true'
         run: |
           $pkg = Get-ChildItem ./artifacts/*.nupkg | Select-Object -First 1
           dotnet nuget push $pkg.FullName `
-            --api-key ${{ secrets.NUGET_API_KEY }} `
             --source https://api.nuget.org/v3/index.json
