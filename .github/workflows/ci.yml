@@ -52,7 +52,7 @@ jobs:
         id: nuget-login
         uses: NuGet/login@v1
         with:
-          user: ${{ github.repository_owner }}
+          user: dshe
 
       - name: Publish to NuGet
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.publish == 'true'
