@@ -42,7 +42,7 @@ jobs:
         run: dotnet pack ${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj `
           --configuration Release `
           --no-restore --no-build `
-          -o ./artifacts
+          -o ./artifacts    
 
       - name: List artifacts
         run: ls ./artifacts
