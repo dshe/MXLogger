@@ -53,3 +53,5 @@ jobs:
           $pkg = Get-ChildItem ./artifacts/*.nupkg | Select-Object -First 1
           dotnet nuget push $pkg.FullName `
             --source https://api.nuget.org/v3/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}            
