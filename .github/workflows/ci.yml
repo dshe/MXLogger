@@ -50,9 +50,9 @@ jobs:
       - name: NuGet login
         if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.publish == 'true' || github.ref == 'refs/heads/main' && github.event_name == 'push' }}
         id: nuget-login
-        uses: NuGet/login@v1        
+        uses: NuGet/login@v1
         with:
-          nuget-username: ${{ github.repository_owner }}
+          user: ${{ github.repository_owner }}
 
       - name: Publish to NuGet
         if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.publish == 'true' || github.ref == 'refs/heads/main' && github.event_name == 'push' }}
